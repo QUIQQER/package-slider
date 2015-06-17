@@ -4,6 +4,10 @@
  *
  * @author www.pcsg.de (Henning Leutz)
  * @module package/quiqqer/slider/bin/Slider
+ *
+ * @require qui/QUI
+ * @require package/quiqqer/gallery/bin/controls/Slider
+ * @require css!package/quiqqer/slider/bin/Slider.css
  */
 define('package/quiqqer/slider/bin/Slider', [
 

@@ -10,11 +10,12 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
     'qui/QUI',
     'qui/controls/Control',
     'qui/controls/buttons/Button',
+    'qui/controls/windows/Confirm',
     'controls/projects/project/media/Popup',
 
     'css!package/quiqqer/slider/bin/admin/ImageDataList.css'
 
-], function(QUI, QUIControl, QUIButton, MediaWindow)
+], function(QUI, QUIControl, QUIButton, QUIConfirm, MediaWindow)
 {
     "use strict";
 
@@ -26,7 +27,8 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
         Binds : [
             'openAddWindow',
             '$onImport',
-            '$onInject'
+            '$onInject',
+            '$removeData'
         ],
 
         initialize : function(options)
@@ -37,6 +39,7 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
             this.$Container = null;
             this.$Buttons   = null;
             this.$Project   = null;
+            this.$Message   = null;
 
             this.$elements = {};
 
@@ -65,6 +68,7 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
 
             this.$Container = this.$Elm.getElement('.quiqqer-slider-imageDataList-container');
             this.$Buttons   = this.$Elm.getElement('.quiqqer-slider-imageDataList-buttons');
+            this.$Message   = this.$Elm.getElement('.quiqqer-slider-imageDataList-container-message');
 
             this.$elements.AddButton = new QUIButton({
                 text : 'Bild hinzufügen',
@@ -121,6 +125,12 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
             }).open();
         },
 
+
+        $refreshData : function()
+        {
+
+        },
+
         /**
          *
          * @param {String} imageSrc
@@ -129,51 +139,107 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
          */
         addData : function(imageSrc, link, text)
         {
-            this.getElm().getElement(
-                '.quiqqer-slider-imageDataList-container-message'
-            ).setStyle('display', 'none');
+            return new Promise(function(resolve)
+            {
+                this.$Message.setStyle('display', 'none');
 
-            var Entry = new Element('div', {
-                'class' : 'quiqqer-slider-imageDataList-entry',
-                html : '<div class="quiqqer-slider-imageDataList-entry-image"></div>' +
-                       '<div class="quiqqer-slider-imageDataList-entry-text"></div>' +
-                       '<div class="quiqqer-slider-imageDataList-entry-link"></div>' +
-                       '<div class="quiqqer-slider-imageDataList-entry-edit"></div>'
-            }).inject(this.$Container);
+                var Entry = new Element('div', {
+                    'class' : 'quiqqer-slider-imageDataList-entry',
+                    html : '<div class="quiqqer-slider-imageDataList-entry-image"></div>' +
+                           '<div class="quiqqer-slider-imageDataList-entry-text"></div>' +
+                           '<div class="quiqqer-slider-imageDataList-entry-link"></div>' +
+                           '<div class="quiqqer-slider-imageDataList-entry-edit"></div>'
+                }).inject(this.$Container);
 
-            var Img  = Entry.getElement('.quiqqer-slider-imageDataList-entry-image');
-            var Text = Entry.getElement('.quiqqer-slider-imageDataList-entry-text');
-            var Link = Entry.getElement('.quiqqer-slider-imageDataList-entry-link');
-            var Edit = Entry.getElement('.quiqqer-slider-imageDataList-entry-edit');
+                var Img  = Entry.getElement('.quiqqer-slider-imageDataList-entry-image');
+                var Text = Entry.getElement('.quiqqer-slider-imageDataList-entry-text');
+                var Link = Entry.getElement('.quiqqer-slider-imageDataList-entry-link');
+                var Edit = Entry.getElement('.quiqqer-slider-imageDataList-entry-edit');
 
-            if (imageSrc.match('image.php')) {
-                imageSrc = imageSrc +'&quiadmin=1&maxwidth=40&maxheight=40';
-            }
+                if (imageSrc.match('image.php')) {
+                    imageSrc = imageSrc +'&quiadmin=1&maxwidth=40&maxheight=40';
+                }
 
-            new Element('img', {
-                src : URL_DIR + imageSrc
-            }).inject( Img );
+                new Element('img', {
+                    src : URL_DIR + imageSrc
+                }).inject( Img );
 
-            Text.set('html', text || '&nbsp;');
-            Link.set('html', link || '&nbsp;');
+                Text.set('html', text || '&nbsp;');
+                Link.set('html', link || '&nbsp;');
 
-            new QUIButton({
-                icon : 'icon-edit',
-                events : {
-                    onClick : function() {
+                new QUIButton({
+                    icon : 'icon-edit',
+                    events : {
+                        onClick : function() {
+                            this.$editData(Entry);
+                        }.bind(this)
+                    }
+                }).inject(Edit);
+
+                new QUIButton({
+                    icon : 'icon-trash',
+                    events : {
+                        onClick : function() {
+                            this.$removeData(Entry);
+                        }.bind(this)
+                    }
+                }).inject(Edit);
+
+                if (text || link) {
+                    resolve();
+                    return;
+                }
+
+                this.$editData(Entry);
+
+            }.bind(this));
+        },
+
+        /**
+         *
+         * @param {HTMLElement} Entry
+         */
+        $editData : function(Entry)
+        {
+            new QUIConfirm({
+                title     : 'Bildedaten bearbeiten',
+                maxWidth  : 750,
+                maxHeight : 500,
+                events :
+                {
+                    onOpen : function(Win)
+                    {
+                        var Content = Win.getContent();
 
                     }
                 }
-            }).inject(Edit);
+            }).open();
+        },
 
-            new QUIButton({
-                icon : 'icon-trash',
-                events : {
-                    onClick : function() {
+        /**
+         *
+         * @param {HTMLElement} Entry
+         */
+        $removeData : function(Entry)
+        {
+            console.log( Entry );
 
-                    }
+            new QUIConfirm({
+                title     : 'Möchten Sie wirklich das Bild entfernen?',
+                text      : 'Wirklich das Bild entfernen?',
+                information  : 'Das Bild wird nur aus dem Slider entfernt und wird nicht mehr im Slider angezeigt.<br />'+
+                               'Auch die gesetzten Daten gehen verloren.',
+                maxWidth  : 450,
+                maxHeight : 300,
+                Entry : Entry,
+                events :
+                {
+                    onSubmit : function(Win) {
+                        Win.getAttribute('Entry').destroy();
+                        this.$refreshData();
+                    }.bind(this)
                 }
-            }).inject(Edit);
+            }).open();
         },
 
         /**
