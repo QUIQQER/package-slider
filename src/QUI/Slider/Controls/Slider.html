@@ -1,0 +1,10 @@
+{foreach $this->getList() as $data}
+<div class="entry quiqqer-slider-image"
+     data-src="{$data.image->getUrl()}"
+     data-href="{$data.link}"
+     data-target="_blank"
+>
+    <div class="title"></div>
+    <div class="text">{$data.text}</div>
+</div>
+{/foreach}

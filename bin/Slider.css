@@ -1,0 +1,10 @@
+
+.quiqqer-slider {
+    float: left;
+    width: 100%;
+}
+
+.quiqqer-slider .quiqqer-gallery-slider-image {
+    height: auto;
+    max-height: 100%;
+}

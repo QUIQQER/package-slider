@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiqqer>
+
+    <bricks>
+        <brick control="\QUI\Slider\Controls\Slider">
+            <title>
+                <locale group="quiqqer/slider" var="slider.control.title" />
+            </title>
+            <description>
+                <locale group="quiqqer/slider" var="slider.control.description" />
+            </description>
+
+
+            <settings>
+                <setting name="images" data-qui="package/quiqqer/slider/bin/admin/ImageDataList">
+                    <locale group="quiqqer/slider" var="brick.control.slider.setting.images" />
+                </setting>
+            </settings>
+        </brick>
+    </bricks>
+
+</quiqqer>
