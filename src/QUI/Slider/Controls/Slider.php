@@ -58,29 +58,29 @@ class Slider extends QUI\Control
 
 
         // test
-        $this->addImage(
-            'image.php?project=mytest&id=29',
-            'index.php?project=mytest&lang=de&id=1113',
-            'dies ist ein test'
-        );
-
-        $this->addImage(
-            'image.php?project=mytest&id=42',
-            'index.php?project=mytest&lang=de&id=1113',
-            'dies ist ein test 1'
-        );
-
-        $this->addImage(
-            'image.php?project=mytest&id=26',
-            'index.php?project=mytest&lang=de&id=1113',
-            'dies ist ein test 2'
-        );
-
-        $this->addImage(
-            'image.php?project=mytest&id=25',
-            'index.php?project=mytest&lang=de&id=1113',
-            'dies ist ein test 3'
-        );
+//        $this->addImage(
+//            'image.php?project=mytest&id=29',
+//            'index.php?project=mytest&lang=de&id=1113',
+//            'dies ist ein test'
+//        );
+//
+//        $this->addImage(
+//            'image.php?project=mytest&id=42',
+//            'index.php?project=mytest&lang=de&id=1113',
+//            'dies ist ein test 1'
+//        );
+//
+//        $this->addImage(
+//            'image.php?project=mytest&id=26',
+//            'index.php?project=mytest&lang=de&id=1113',
+//            'dies ist ein test 2'
+//        );
+//
+//        $this->addImage(
+//            'image.php?project=mytest&id=25',
+//            'index.php?project=mytest&lang=de&id=1113',
+//            'dies ist ein test 3'
+//        );
     }
 
     /**
@@ -123,6 +123,7 @@ class Slider extends QUI\Control
             $link = SiteUtils::rewriteSiteLink($link);
 
         } catch (QUI\Exception $Exception) {
+
             QUI\System\Log::addDebug('##################');
             QUI\System\Log::addDebug($link);
             QUI\System\Log::addDebug($Exception->getMessage());

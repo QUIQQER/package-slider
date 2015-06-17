@@ -1,0 +1,72 @@
+
+.quiqqer-slider-imageDataList {
+    background: #fff;
+    border: 2px solid #dedede;
+    border-radius: 3px;
+    float: left;
+    height: 200px;
+    width: 100%;
+}
+
+.quiqqer-slider-imageDataList-container {
+    float: left;
+    height: calc(100% - 30px);
+    overflow: auto;
+    padding: 10px;
+    width: 100%;
+}
+
+.quiqqer-slider-imageDataList-buttons {
+    float: left;
+    height: 30px;
+    width: 100%;
+}
+
+/** Image Entry
+ ======================================================== */
+
+.quiqqer-slider-imageDataList-entry {
+    border-bottom: 1px solid #ddd;
+    clear: both;
+    float: left;
+    padding: 10px 0;
+    position: relative;
+    width: 100%;
+}
+
+.quiqqer-slider-imageDataList-entry-image {
+    float: left;
+    width: 80px;
+}
+
+.quiqqer-slider-imageDataList-entry-image img {
+    float: left;
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.quiqqer-slider-imageDataList-entry-link,
+.quiqqer-slider-imageDataList-entry-text {
+    float: left;
+    line-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: calc( (100% - 80px) / 2 );
+    white-space: nowrap;
+}
+
+.quiqqer-slider-imageDataList-entry-edit {
+    float: left;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 15px;
+}
+
+.quiqqer-slider-imageDataList-entry button {
+    margin-left: 10px;
+}
+
+.quiqqer-slider-imageDataList-entry:hover .quiqqer-slider-imageDataList-entry-edit {
+    opacity: 1;
+}
