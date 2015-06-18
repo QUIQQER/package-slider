@@ -10,7 +10,6 @@
                 <locale group="quiqqer/slider" var="slider.control.description" />
             </description>
 
-
             <settings>
                 <setting name="images" data-qui="package/quiqqer/slider/bin/admin/ImageDataList">
                     <locale group="quiqqer/slider" var="brick.control.slider.setting.images" />
@@ -43,7 +42,6 @@
             <description>
                 <locale group="quiqqer/slider" var="slider.nivo.control.description" />
             </description>
-
 
             <settings>
                 <setting name="images" data-qui="package/quiqqer/slider/bin/admin/ImageDataList">

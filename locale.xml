@@ -1,9 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <locales>
     <groups name="quiqqer/slider" datatype="js">
-        <locale name="">
-            <de><![CDATA[]]></de>
-            <en><![CDATA[]]></en>
+        <locale name="imageDataList.text.no.images">
+            <de><![CDATA[Keine Bilder eingetragen]]></de>
+            <en><![CDATA[No images insert]]></en>
+        </locale>
+        <locale name="imageDataList.btn.add">
+            <de><![CDATA[Bild hinzufügen]]></de>
+            <en><![CDATA[Add an image]]></en>
+        </locale>
+        <locale name="imageDataList.btn.edit.title">
+            <de><![CDATA[Bild-Eintrag editieren]]></de>
+            <en><![CDATA[Edit image entry]]></en>
+        </locale>
+        <locale name="imageDataList.btn.del.title">
+            <de><![CDATA[Bild-Eintrag entfernen]]></de>
+            <en><![CDATA[Remove the image entry]]></en>
+        </locale>
+
+        <locale name="imageDataList.window.remove.title">
+            <de><![CDATA[Möchten Sie wirklich das Bild entfernen?]]></de>
+            <en><![CDATA[Are you sure you want to remove the image?]]></en>
+        </locale>
+        <locale name="imageDataList.window.remove.text">
+            <de><![CDATA[Wirklich das Bild entfernen?]]></de>
+            <en><![CDATA[Really remove the image?]]></en>
+        </locale>
+        <locale name="imageDataList.window.remove.information" html="true">
+            <de><![CDATA[
+                Das Bild wird nur aus dem Slider entfernt und wird nicht mehr im Slider angezeigt.<br />
+                Auch die gesetzten Daten gehen verloren.
+            ]]></de>
+            <en><![CDATA[
+                The picture is only removed from the slider and is no longer displayed in the slider. <br />
+                The set data will be lost.
+            ]]></en>
         </locale>
     </groups>
     <groups name="quiqqer/slider" datatype="php">
@@ -33,6 +64,97 @@
         <locale name="brick.control.slider.setting.period">
             <de><![CDATA[Zeitintervall]]></de>
             <en><![CDATA[Time period]]></en>
+        </locale>
+
+        <locale name="brick.control.slider.setting.effect">
+            <de><![CDATA[Effekt]]></de>
+            <en><![CDATA[Effect]]></en>
+        </locale>
+
+        <locale name="brick.control.slider.setting.effect.fade">
+            <de><![CDATA[Fade]]></de>
+            <en><![CDATA[fade]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.fold">
+            <de><![CDATA[Fold]]></de>
+            <en><![CDATA[fold]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.random">
+            <de><![CDATA[Zufällig]]></de>
+            <en><![CDATA[random]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.sliceLeftDown">
+            <de><![CDATA[sliceLeftDown]]></de>
+            <en><![CDATA[sliceLeftDown]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.sliceLeftUp">
+            <de><![CDATA[sliceLeftUp]]></de>
+            <en><![CDATA[sliceLeftUp]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.sliceLeftRightDown">
+            <de><![CDATA[sliceLeftRightDown]]></de>
+            <en><![CDATA[sliceLeftRightDown]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.sliceLeftRightUp">
+            <de><![CDATA[sliceLeftRightUp]]></de>
+            <en><![CDATA[sliceLeftRightUp]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.sliceRightDown">
+            <de><![CDATA[sliceRightDown]]></de>
+            <en><![CDATA[sliceRightDown]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.sliceRightUp">
+            <de><![CDATA[sliceRightUp]]></de>
+            <en><![CDATA[sliceRightUp]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.wipeDown">
+            <de><![CDATA[wipeDown]]></de>
+            <en><![CDATA[wipeDown]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.wipeUp">
+            <de><![CDATA[wipeUp]]></de>
+            <en><![CDATA[wipeUp]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.sliceDownLeft">
+            <de><![CDATA[sliceDownLeft]]></de>
+            <en><![CDATA[sliceDownLeft]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.sliceDownRight">
+            <de><![CDATA[sliceDownRight]]></de>
+            <en><![CDATA[sliceDownRight]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.sliceUpDownLeft">
+            <de><![CDATA[sliceUpDownLeft]]></de>
+            <en><![CDATA[sliceUpDownLeft]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.sliceUpDownRight">
+            <de><![CDATA[sliceUpDownRight]]></de>
+            <en><![CDATA[sliceUpDownRight]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.sliceUpLeft">
+            <de><![CDATA[sliceUpLeft]]></de>
+            <en><![CDATA[sliceUpLeft]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.sliceUpRight">
+            <de><![CDATA[sliceUpRight]]></de>
+            <en><![CDATA[sliceUpRight]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.wipeLeft">
+            <de><![CDATA[wipeLeft]]></de>
+            <en><![CDATA[wipeLeft]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.effect.wipeRight">
+            <de><![CDATA[wipeRight]]></de>
+            <en><![CDATA[wipeRight]]></en>
+        </locale>
+
+        <locale name="brick.control.slider.setting.slices">
+            <de><![CDATA[Anzahl der Teile]]></de>
+            <en><![CDATA[Number of slices]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.animspeed">
+            <de><![CDATA[Animationsgeschwindigkeit]]></de>
+            <en><![CDATA[Animation speed]]></en>
         </locale>
     </groups>
 </locales>

@@ -35,6 +35,5 @@ class SliderNivo extends Slider
             'period',
             'type'
         );
-
     }
 }

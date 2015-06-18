@@ -19,12 +19,15 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
     'qui/controls/buttons/Button',
     'qui/controls/windows/Confirm',
     'controls/projects/project/media/Popup',
+    'Locale',
 
     'css!package/quiqqer/slider/bin/admin/ImageDataList.css'
 
-], function(QUI, QUIControl, QUIButton, QUIConfirm, MediaWindow)
+], function(QUI, QUIControl, QUIButton, QUIConfirm, MediaWindow, QUILocale)
 {
     "use strict";
+
+    var lg = 'quiqqer/slider';
 
     return new Class({
 
@@ -67,7 +70,7 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
                 'class' : 'quiqqer-slider-imageDataList',
                 html : '<div class="quiqqer-slider-imageDataList-container">'+
                            '<div class="quiqqer-slider-imageDataList-container-message">'+
-                               'Keine Bilder eingetragen'+
+                               QUILocale.get(lg, 'imageDataList.text.no.images') +
                            '</div>'+
                        '</div>'+
                        '<div class="quiqqer-slider-imageDataList-buttons"></div>'
@@ -78,7 +81,7 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
             this.$Message   = this.$Elm.getElement('.quiqqer-slider-imageDataList-container-message');
 
             this.$elements.AddButton = new QUIButton({
-                text : 'Bild hinzufügen',
+                text : QUILocale.get(lg, 'imageDataList.btn.add'),
                 disabled : true,
                 events : {
                     onClick : this.openAddWindow
@@ -179,6 +182,7 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
 
                 new QUIButton({
                     icon : 'icon-edit',
+                    title : QUILocale.get(lg, 'imageDataList.btn.edit.title'),
                     events : {
                         onClick : function() {
                             this.$editData(Entry);
@@ -188,6 +192,7 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
 
                 new QUIButton({
                     icon : 'icon-trash',
+                    title : QUILocale.get(lg, 'imageDataList.btn.del.title'),
                     events : {
                         onClick : function() {
                             this.$removeData(Entry);
@@ -342,10 +347,9 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
         $removeData : function(Entry)
         {
             new QUIConfirm({
-                title : 'Möchten Sie wirklich das Bild entfernen?',
-                text  : 'Wirklich das Bild entfernen?',
-                information  : 'Das Bild wird nur aus dem Slider entfernt und wird nicht mehr im Slider angezeigt.<br />'+
-                               'Auch die gesetzten Daten gehen verloren.',
+                title : QUILocale.get(lg, 'imageDataList.window.remove.title'),
+                text  : QUILocale.get(lg, 'imageDataList.window.remove.text'),
+                information  : QUILocale.get(lg, 'imageDataList.window.remove.information'),
                 maxWidth  : 450,
                 maxHeight : 300,
                 Entry : Entry,
