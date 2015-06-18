@@ -11,7 +11,7 @@
     </groups>
     <groups name="quiqqer/slider" datatype="php,js ">
         <locale name="brick.control.slider.setting.images">
-            <de><![CDATA[Bilder hinzuügen]]></de>
+            <de><![CDATA[Bilder hinzufügen]]></de>
             <en><![CDATA[Add images]]></en>
         </locale>
         <locale name="brick.control.slider.setting.autostart">

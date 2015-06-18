@@ -29,7 +29,7 @@
                 <setting name="showTitleAlways" type="checkbox">
                     <locale group="quiqqer/slider" var="brick.control.slider.setting.showTitleAlways" />
                 </setting>
-                <setting name="period">
+                <setting name="period" type="number">
                     <locale group="quiqqer/slider" var="brick.control.slider.setting.period" />
                     <defaultValue>5000</defaultValue>
                 </setting>

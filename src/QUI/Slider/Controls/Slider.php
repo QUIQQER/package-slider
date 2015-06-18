@@ -78,12 +78,16 @@ class Slider extends QUI\Control
         }
 
         $settings = array(
-            'autostart'          => $this->getAttribute('autostart'),
-            'shadow'             => $this->getAttribute('shadow'),
-            'showControlsAlways' => $this->getAttribute('showControlsAlways'),
-            'showTitleAlways'    => $this->getAttribute('showTitleAlways'),
-            'period'             => $this->getAttribute('period')
+            'autostart',
+            'shadow',
+            'showControlsAlways',
+            'showTitleAlways',
+            'period'
         );
+
+        foreach ($settings as $setting) {
+            $this->setAttribute('data-'.$setting, $this->getAttribute($setting));
+        }
 
         $Engine->assign(array(
             'this'     => $this,
