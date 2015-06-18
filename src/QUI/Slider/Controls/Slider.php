@@ -32,6 +32,11 @@ class Slider extends QUI\Control
     protected $_imagesParsing = false;
 
     /**
+     * @var array
+     */
+    protected $_settings = array();
+
+    /**
      * constructor
      *
      * @param Array $attributes
@@ -55,7 +60,19 @@ class Slider extends QUI\Control
             OPT_DIR.'quiqqer/gallery/lib/QUI/Gallery/Controls/Slider.css'
         );
 
+        $this->_settings = array(
+            'autostart',
+            'shadow',
+            'showControlsAlways',
+            'showTitleAlways',
+            'period',
+            'type'
+        );
+
+
         parent::setAttributes($attributes);
+
+        $this->setAttribute('type', 'standard');
     }
 
     /**
@@ -72,26 +89,21 @@ class Slider extends QUI\Control
             $images = json_decode($this->getAttribute('images'), true);
 
             foreach ($images as $image) {
-                $this->addImage($image['image'], $image['link'],
-                    $image['text']);
+
+                $this->addImage(
+                    $image['image'],
+                    $image['link'],
+                    $image['text']
+                );
             }
         }
 
-        $settings = array(
-            'autostart',
-            'shadow',
-            'showControlsAlways',
-            'showTitleAlways',
-            'period'
-        );
-
-        foreach ($settings as $setting) {
+        foreach ($this->_settings as $setting) {
             $this->setAttribute('data-'.$setting, $this->getAttribute($setting));
         }
 
         $Engine->assign(array(
-            'this'     => $this,
-            'settings' => $settings
+            'this'  => $this
         ));
 
 
@@ -118,7 +130,10 @@ class Slider extends QUI\Control
         }
 
         try {
-            $link = SiteUtils::rewriteSiteLink($link);
+
+            if (SiteUtils::isSiteLink($link)) {
+                $link = SiteUtils::rewriteSiteLink($link);
+            }
 
         } catch (QUI\Exception $Exception) {
 

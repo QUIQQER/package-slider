@@ -9,6 +9,7 @@
 
  authors:
  - Johannes Fischer
+ - Henning Leutz
 
  requires:
  - core/1.4: '*'
@@ -21,9 +22,11 @@
 
 define('package/quiqqer/slider/bin/NivoSlider', [
 
+    'qui/utils/Functions',
+
     'css!package/quiqqer/slider/bin/NivoSlider.css'
 
-], function()
+], function(QUIFunctionsUtils)
 {
     "use strict";
 
@@ -90,9 +93,9 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             this.initSlider();
             this.createSlices();
 
-            window.addEvent('resize', function() {
-                this.refresh();
-            }.bind(this));
+            window.addEvents({
+                resize : QUIFunctionsUtils.debounce(this.refresh.bind(this))
+            });
 
             if (this.options.autoPlay) {
                 this.play();
@@ -114,7 +117,9 @@ define('package/quiqqer/slider/bin/NivoSlider', [
 
         refresh : function()
         {
-            if (this.interval) {
+            var wasrunning = this.interval ? true : false;
+
+            if (wasrunning) {
                 this.pause();
             }
 
@@ -122,6 +127,12 @@ define('package/quiqqer/slider/bin/NivoSlider', [
                 this.slices.destroy();
                 this.containerSize = this.holder.getSize();
                 this.createSlices();
+
+                this.setBackgroundImage();
+            }
+
+            if (wasrunning) {
+                this.play();
             }
         },
 

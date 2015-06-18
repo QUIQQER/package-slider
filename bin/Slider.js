@@ -33,7 +33,7 @@ define('package/quiqqer/slider/bin/Slider', [
         ],
 
         options : {
-            type   : 'nivo', // standard / nivo
+            type   : 'standard', // standard / nivo
             period : 5000,
             shadow : false,
             showcontrolsalways : true,
@@ -101,6 +101,9 @@ define('package/quiqqer/slider/bin/Slider', [
                 this.setAttribute('autostart', this.$Elm.get('data-autostart'));
             }
 
+            if (this.$Elm.get('data-type')) {
+                this.setAttribute('type', this.$Elm.get('data-type'));
+            }
 
             switch (this.getAttribute('type')) {
                 case 'nivo':
@@ -247,7 +250,7 @@ define('package/quiqqer/slider/bin/Slider', [
 
                             Img.inject(Container);
 
-                            if (images[i].href && images[i].href !== '') {
+                            if (images[i].href && images[i].href.trim() !== '') {
                                 new Element('a', {
                                     href   : Entry.href,
                                     target : Entry.target
@@ -256,12 +259,12 @@ define('package/quiqqer/slider/bin/Slider', [
                         }
 
                         new Slider(Container, {
-                            animSpeed   : 500,
-                            effect      : 'sliceUpDownLeft',
-                            interval    : 5000,
+                            animSpeed   : this.$Elm.get('data-animspeed') || 500,
+                            effect      : this.$Elm.get('data-effect') || 'fade',
+                            interval    : this.getAttribute('period'),
                             orientation : 'vertical',
-                            slices      : 10,
-                            directionNav         : true,
+                            slices      : this.$Elm.get('data-slices') || 10,
+                            directionNav         : this.getAttribute('showcontrolsalways'),
                             directionNavHide     : false,
                             directionNavPosition : 'outside',
                             directionNavWidth    : '20%'

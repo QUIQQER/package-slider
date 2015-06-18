@@ -92,6 +92,10 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
                 this.$Elm.setStyles(this.getAttribute('styles'));
             }
 
+            if (this.$Project) {
+                this.$elements.AddButton.enable();
+            }
+
             return this.$Elm;
         },
 
@@ -424,7 +428,11 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
 
             this.$Input.type = 'hidden';
 
-            var data = JSON.decode(this.$Input.value);
+            var data = [];
+
+            if (this.$Input.value !== '') {
+                data = JSON.decode(this.$Input.value);
+            }
 
             for (var i = 0, len = data.length; i < len; i++) {
                 this.addData(
