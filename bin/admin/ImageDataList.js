@@ -1,9 +1,16 @@
 
 /**
- * Admin Slider image list
+ * Slider image list for the administration
  *
  * @author www.pcsg.de (Henning Leutz)
  * @module package/quiqqer/slider/bin/admin/ImageDataList
+ *
+ * @require qui/QUI
+ * @require qui/controls/Control
+ * @require qui/controls/buttons/Button
+ * @require qui/controls/windows/Confirm
+ * @require controls/projects/project/media/Popup
+ * @require css!package/quiqqer/slider/bin/admin/ImageDataList.css
  */
 define('package/quiqqer/slider/bin/admin/ImageDataList', [
 
@@ -89,6 +96,7 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
         },
 
         /**
+         * Set the project
          *
          * @param {Object|String} Project - classes/projects/Project | Project name
          */
@@ -107,7 +115,7 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
         },
 
         /**
-         *
+         * Add an image - opens the dialog
          */
         openAddWindow : function()
         {
@@ -125,21 +133,33 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
             }).open();
         },
 
-
+        /**
+         * Set the data to the input node
+         */
         $refreshData : function()
         {
+            var data = [],
+                elements = this.$Container.getElements(
+                    '.quiqqer-slider-imageDataList-entry'
+                );
 
+            for (var i = 0, len = elements.length; i < len; i++) {
+                data.push(this.$getDataFromEntry(elements[i]));
+            }
+
+            this.$Input.value = JSON.encode(data);
         },
 
         /**
+         * Add a new image
          *
          * @param {String} imageSrc
-         * @param {String} link
-         * @param {String} text
+         * @param {String} [link]
+         * @param {String} [text]
          */
         addData : function(imageSrc, link, text)
         {
-            return new Promise(function(resolve)
+            return new Promise(function(resolve, reject)
             {
                 this.$Message.setStyle('display', 'none');
 
@@ -151,21 +171,7 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
                            '<div class="quiqqer-slider-imageDataList-entry-edit"></div>'
                 }).inject(this.$Container);
 
-                var Img  = Entry.getElement('.quiqqer-slider-imageDataList-entry-image');
-                var Text = Entry.getElement('.quiqqer-slider-imageDataList-entry-text');
-                var Link = Entry.getElement('.quiqqer-slider-imageDataList-entry-link');
                 var Edit = Entry.getElement('.quiqqer-slider-imageDataList-entry-edit');
-
-                if (imageSrc.match('image.php')) {
-                    imageSrc = imageSrc +'&quiadmin=1&maxwidth=40&maxheight=40';
-                }
-
-                new Element('img', {
-                    src : URL_DIR + imageSrc
-                }).inject( Img );
-
-                Text.set('html', text || '&nbsp;');
-                Link.set('html', link || '&nbsp;');
 
                 new QUIButton({
                     icon : 'icon-edit',
@@ -185,48 +191,155 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
                     }
                 }).inject(Edit);
 
-                if (text || link) {
+
+                if (typeof text !== 'undefined')
+                {
+                    this.$setData(Entry, {
+                        image : imageSrc,
+                        text  : text,
+                        link  : link
+                    });
+
+                    this.$refreshData();
+
                     resolve();
+
                     return;
                 }
 
-                this.$editData(Entry);
+
+                require(['Ajax', 'qui/utils/String'], function(Ajax, QUIStringUtils)
+                {
+                    var data = QUIStringUtils.getUrlParams( imageSrc );
+
+                    if ( "project" in data && "id" in data ) {
+
+                        Ajax.get('ajax_media_get', function(imageData)
+                        {
+                            if (!imageData) {
+                                reject();
+                                return;
+                            }
+
+                            this.$setData(Entry, {
+                                image : imageSrc,
+                                text  : imageData.file.short,
+                                link  : link || ''
+                            });
+
+                            this.$refreshData();
+
+                            resolve();
+
+                        }.bind(this), {
+                            fileid  : data.id,
+                            project : data.project,
+                            onError : reject
+                        });
+
+                        return;
+                    }
+
+                    reject();
+
+                }.bind(this));
 
             }.bind(this));
         },
 
         /**
+         * edit an image data entry
+         * opens the edit dialog
          *
          * @param {HTMLElement} Entry
          */
         $editData : function(Entry)
         {
             new QUIConfirm({
-                title     : 'Bildedaten bearbeiten',
+                title     : 'Bilddaten bearbeiten',
                 maxWidth  : 750,
                 maxHeight : 500,
+                autoclose : false,
                 events :
                 {
                     onOpen : function(Win)
                     {
+                        Win.Loader.show();
+
                         var Content = Win.getContent();
 
-                    }
+                        require([
+                            'text!package/quiqqer/slider/bin/admin/ImageDataListEdit.html',
+                            'utils/Controls',
+                            'qui/utils/Form'
+                        ], function(result, UtilsControls, QUIUtilsForm)
+                        {
+                            Content.set('html', result);
+
+                            var data    = this.$getDataFromEntry(Entry),
+                                Preview = Content.getElement('.imageDataList-edit-preview');
+
+                            QUIUtilsForm.setDataToForm(
+                                data,
+                                Content.getElement('form')
+                            );
+
+                            Preview.set({
+                                html : '<img src="'+ URL_DIR + data.image +'&quiadmin=1&maxwidth=340&maxheight=150" />'
+                            });
+
+                            UtilsControls.parse(Content).then(function()
+                            {
+                                var Control = QUI.Controls.getById(
+                                    Content.getElement('.qui-controls-project-media-input')
+                                           .get('data-quiid')
+                                );
+
+                                Control.addEvent('onChange', function(Input, value) {
+                                    Preview.set({
+                                        html : '<img src="'+ URL_DIR + value +'&quiadmin=1&maxwidth=340&maxheight=150" />'
+                                    });
+                                });
+
+                                Win.Loader.hide();
+                            });
+
+                        }.bind(this));
+
+                    }.bind(this),
+
+                    onSubmit : function(Win)
+                    {
+                        Win.Loader.show();
+
+                        require(['qui/utils/Form'], function(QUIUtilsForm)
+                        {
+                            var data = QUIUtilsForm.getFormData(
+                                Win.getContent().getElement('form')
+                            );
+
+                            this.$setData(Entry, data);
+                            this.$refreshData();
+
+                            Win.close();
+
+                        }.bind(this));
+
+                    }.bind(this)
                 }
             }).open();
         },
 
         /**
+         * Remove an image data node
          *
          * @param {HTMLElement} Entry
          */
         $removeData : function(Entry)
         {
-            console.log( Entry );
-
             new QUIConfirm({
-                title     : 'Möchten Sie wirklich das Bild entfernen?',
-                text      : 'Wirklich das Bild entfernen?',
+                title : 'Möchten Sie wirklich das Bild entfernen?',
+                text  : 'Wirklich das Bild entfernen?',
                 information  : 'Das Bild wird nur aus dem Slider entfernt und wird nicht mehr im Slider angezeigt.<br />'+
                                'Auch die gesetzten Daten gehen verloren.',
                 maxWidth  : 450,
@@ -243,6 +356,60 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
         },
 
         /**
+         * Set the data for an image entry
+         *
+         * @param {HTMLElement} Entry
+         * @param {Object} data
+         */
+        $setData : function(Entry, data)
+        {
+            var Img  = Entry.getElement('.quiqqer-slider-imageDataList-entry-image');
+            var Text = Entry.getElement('.quiqqer-slider-imageDataList-entry-text');
+            var Link = Entry.getElement('.quiqqer-slider-imageDataList-entry-link');
+
+            // image
+            Img.set('html', '');
+
+            var imageSrc = data.image;
+            var originalSrc = imageSrc;
+
+            if (imageSrc.match('image.php')) {
+                imageSrc = imageSrc +'&quiadmin=1&maxwidth=40&maxheight=40';
+            }
+
+            new Element('img', {
+                src             : URL_DIR + imageSrc,
+                'data-original' : originalSrc
+            }).inject( Img );
+
+
+            // text
+            Text.set('html', data.text || '&nbsp;');
+
+
+            // link
+            Link.set('html', data.link || '&nbsp;');
+        },
+
+        /**
+         * Return the data from an image entry
+         *
+         * @param Entry
+         * @returns {{image: *, text: *, link: *}}
+         */
+        $getDataFromEntry : function(Entry)
+        {
+            var Text  = Entry.getElement('.quiqqer-slider-imageDataList-entry-text');
+            var Link  = Entry.getElement('.quiqqer-slider-imageDataList-entry-link');
+
+            return {
+                image : Entry.getElement('img').get('data-original'),
+                text  : Text.get('html').trim(),
+                link  : Link.get('html').trim()
+            };
+        },
+
+        /**
          * event : on import
          */
         $onImport : function()
@@ -256,6 +423,16 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
             }
 
             this.$Input.type = 'hidden';
+
+            var data = JSON.decode(this.$Input.value);
+
+            for (var i = 0, len = data.length; i < len; i++) {
+                this.addData(
+                    data[i].image,
+                    data[i].link,
+                    data[i].text
+                );
+            }
         },
 
         /**

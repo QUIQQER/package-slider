@@ -36,11 +36,12 @@
 
 .quiqqer-slider-imageDataList-entry-image {
     float: left;
+    height: 40px;
+    text-align: center;
     width: 80px;
 }
 
 .quiqqer-slider-imageDataList-entry-image img {
-    float: left;
     max-width: 40px;
     max-height: 40px;
 }
@@ -94,4 +95,45 @@
         -moz-transition: all 0.2s ease;
         -ms-transition: all 0.2s ease;
         -o-transition: all 0.2s ease;
+}
+
+
+
+/** Image edit
+ ======================================================== */
+
+.imageDataList {
+    margin: 0 auto;
+    max-width: 340px;
+}
+
+.imageDataList-edit-preview {
+    background: #eee;
+    height: 150px;
+    margin: 0 0 20px;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.imageDataList-edit-preview img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.imageDataList .qui-controls-project-site-input,
+.imageDataList .qui-controls-project-media-input {
+    float: left;
+}
+
+.imageDataList-edit-entry {
+    clear: both;
+    float: left;
+    margin-bottom: 10px;
+}
+
+.imageDataList-edit-entry label {
+    float: left;
+    line-height: 30px;
+    width: 70px;
 }

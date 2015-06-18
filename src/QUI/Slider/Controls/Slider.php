@@ -25,6 +25,13 @@ class Slider extends QUI\Control
     protected $_data = array();
 
     /**
+     * internal image parsing flag
+     *
+     * @var bool
+     */
+    protected $_imagesParsing = false;
+
+    /**
      * constructor
      *
      * @param Array $attributes
@@ -47,12 +54,6 @@ class Slider extends QUI\Control
         $this->addCSSFile(
             OPT_DIR.'quiqqer/gallery/lib/QUI/Gallery/Controls/Slider.css'
         );
-
-        if ($this->getAttribute('images')) {
-            $images = $this->getAttribute('images');
-
-            QUI\System\Log::writeRecursive($images);
-        }
 
         parent::setAttributes($attributes);
 
@@ -92,9 +93,19 @@ class Slider extends QUI\Control
     {
         $Engine = QUI::getTemplateManager()->getEngine();
 
+        if (!$this->_imagesParsing && $this->getAttribute('images')) {
+
+            $images = json_decode($this->getAttribute('images'), true);
+
+            foreach ($images as $image) {
+                $this->addImage($image['image'], $image['link'], $image['text']);
+            }
+        }
+
         $Engine->assign(array(
             'this' => $this
         ));
+
 
         return $Engine->fetch(dirname(__FILE__).'/Slider.html');
     }
@@ -118,8 +129,7 @@ class Slider extends QUI\Control
             return;
         }
 
-        try
-        {
+        try {
             $link = SiteUtils::rewriteSiteLink($link);
 
         } catch (QUI\Exception $Exception) {
