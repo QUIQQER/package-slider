@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<locales>
+    <groups name="quiqqer/slider" datatype="js">
+        <locale name="">
+            <de><![CDATA[]]></de>
+            <en><![CDATA[]]></en>
+        </locale>
+    </groups>
+    <groups name="quiqqer/slider" datatype="php">
+
+    </groups>
+    <groups name="quiqqer/slider" datatype="php,js ">
+        <locale name="brick.control.slider.setting.images">
+            <de><![CDATA[Bilder hinzuügen]]></de>
+            <en><![CDATA[Add images]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.autostart">
+            <de><![CDATA[Automatischer Start]]></de>
+            <en><![CDATA[Start automatic]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.shadow">
+            <de><![CDATA[Schatten hinzufügen]]></de>
+            <en><![CDATA[Add shadow]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.showControlsAlways">
+            <de><![CDATA[Bedienelemente immer sichtbar]]></de>
+            <en><![CDATA[Show controls always]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.showTitleAlways">
+            <de><![CDATA[Bildtitel immer sichtbar]]></de>
+            <en><![CDATA[Show image title always]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.period">
+            <de><![CDATA[Zeitintervall]]></de>
+            <en><![CDATA[Time period]]></en>
+        </locale>
+    </groups>
+</locales>

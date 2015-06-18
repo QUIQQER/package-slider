@@ -15,6 +15,25 @@
                 <setting name="images" data-qui="package/quiqqer/slider/bin/admin/ImageDataList">
                     <locale group="quiqqer/slider" var="brick.control.slider.setting.images" />
                 </setting>
+
+
+                <setting name="autostart" type="checkbox">
+                    <locale group="quiqqer/slider" var="brick.control.slider.setting.autostart" />
+                </setting>
+                <setting name="shadow" type="checkbox">
+                    <locale group="quiqqer/slider" var="brick.control.slider.setting.shadow" />
+                </setting>
+                <setting name="showControlsAlways" type="checkbox">
+                    <locale group="quiqqer/slider" var="brick.control.slider.setting.showControlsAlways" />
+                </setting>
+                <setting name="showTitleAlways" type="checkbox">
+                    <locale group="quiqqer/slider" var="brick.control.slider.setting.showTitleAlways" />
+                </setting>
+                <setting name="period">
+                    <locale group="quiqqer/slider" var="brick.control.slider.setting.period" />
+                    <defaultValue>5000</defaultValue>
+                </setting>
+
             </settings>
         </brick>
     </bricks>

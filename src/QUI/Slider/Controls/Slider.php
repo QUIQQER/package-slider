@@ -56,32 +56,6 @@ class Slider extends QUI\Control
         );
 
         parent::setAttributes($attributes);
-
-
-        // test
-//        $this->addImage(
-//            'image.php?project=mytest&id=29',
-//            'index.php?project=mytest&lang=de&id=1113',
-//            'dies ist ein test'
-//        );
-//
-//        $this->addImage(
-//            'image.php?project=mytest&id=42',
-//            'index.php?project=mytest&lang=de&id=1113',
-//            'dies ist ein test 1'
-//        );
-//
-//        $this->addImage(
-//            'image.php?project=mytest&id=26',
-//            'index.php?project=mytest&lang=de&id=1113',
-//            'dies ist ein test 2'
-//        );
-//
-//        $this->addImage(
-//            'image.php?project=mytest&id=25',
-//            'index.php?project=mytest&lang=de&id=1113',
-//            'dies ist ein test 3'
-//        );
     }
 
     /**
@@ -98,12 +72,22 @@ class Slider extends QUI\Control
             $images = json_decode($this->getAttribute('images'), true);
 
             foreach ($images as $image) {
-                $this->addImage($image['image'], $image['link'], $image['text']);
+                $this->addImage($image['image'], $image['link'],
+                    $image['text']);
             }
         }
 
+        $settings = array(
+            'autostart'          => $this->getAttribute('autostart'),
+            'shadow'             => $this->getAttribute('shadow'),
+            'showControlsAlways' => $this->getAttribute('showControlsAlways'),
+            'showTitleAlways'    => $this->getAttribute('showTitleAlways'),
+            'period'             => $this->getAttribute('period')
+        );
+
         $Engine->assign(array(
-            'this' => $this
+            'this'     => $this,
+            'settings' => $settings
         ));
 
 
