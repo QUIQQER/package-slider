@@ -396,7 +396,7 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
 
 
             // link
-            Link.set('html', data.link || '&nbsp;');
+            Link.set('html', data.link || '');
         },
 
         /**

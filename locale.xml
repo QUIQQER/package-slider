@@ -66,11 +66,23 @@
             <en><![CDATA[Time period]]></en>
         </locale>
 
+        <locale name="brick.control.slider.setting.controlsPosition">
+            <de><![CDATA[Position der Bedienelemente]]></de>
+            <en><![CDATA[Position of the controls]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.controlsPosition.outside">
+            <de><![CDATA[Außen]]></de>
+            <en><![CDATA[outside]]></en>
+        </locale>
+        <locale name="brick.control.slider.setting.controlsPosition.inside">
+            <de><![CDATA[Innen]]></de>
+            <en><![CDATA[inside]]></en>
+        </locale>
+
         <locale name="brick.control.slider.setting.effect">
             <de><![CDATA[Effekt]]></de>
             <en><![CDATA[Effect]]></en>
         </locale>
-
         <locale name="brick.control.slider.setting.effect.fade">
             <de><![CDATA[Fade]]></de>
             <en><![CDATA[fade]]></en>

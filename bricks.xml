@@ -51,15 +51,26 @@
                 <setting name="autostart" type="checkbox">
                     <locale group="quiqqer/slider" var="brick.control.slider.setting.autostart" />
                 </setting>
-                <setting name="showControlsAlways" type="checkbox">
-                    <locale group="quiqqer/slider" var="brick.control.slider.setting.showControlsAlways" />
-                </setting>
                 <setting name="showTitleAlways" type="checkbox">
                     <locale group="quiqqer/slider" var="brick.control.slider.setting.showTitleAlways" />
                 </setting>
                 <setting name="period" type="number">
                     <locale group="quiqqer/slider" var="brick.control.slider.setting.period" />
                     <defaultValue>5000</defaultValue>
+                </setting>
+
+                <setting name="showControlsAlways" type="checkbox">
+                    <locale group="quiqqer/slider" var="brick.control.slider.setting.showControlsAlways" />
+                </setting>
+                <setting name="controlsPosition" type="select">
+                    <locale group="quiqqer/slider" var="brick.control.slider.setting.controlsPosition" />
+
+                    <option value="outside">
+                        <locale group="quiqqer/slider" var="brick.control.slider.setting.controlsPosition.outside" />
+                    </option>
+                    <option value="inside">
+                        <locale group="quiqqer/slider" var="brick.control.slider.setting.controlsPosition.inside" />
+                    </option>
                 </setting>
 
                 <setting name="effect" type="select">

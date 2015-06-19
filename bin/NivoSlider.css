@@ -1,13 +1,13 @@
+
 .nivoo-slider,
 .nivoo-slider-holder {
-    height: 350px;
     overflow: hidden;
     position: relative;
     width: 100%;
 }
 
 .nivoo-slider-holder {
-    width: calc(100% - 120px);
+    z-index: 1;
 }
 
 .nivoo-slider-holder-image {
@@ -28,7 +28,6 @@
 
 .nivoo-slider-holder {
     background-repeat: no-repeat;
-    /*background-position: top center;*/
 }
 
 .nivoo-slider img,
@@ -61,11 +60,11 @@
 .direction-nav-hide {
     opacity: 0;
     transition: opacity 1s ease;
-    -moz-transition: opacity 1s ease;
-    -ms-transition: opacity 1s ease;
-    -o-transition: opacity 1s ease;
-    -moz-transition: opacity 1s ease;
-    -webkit-transition: opacity 1s ease;
+        -moz-transition: opacity 1s ease;
+        -ms-transition: opacity 1s ease;
+        -o-transition: opacity 1s ease;
+        -moz-transition: opacity 1s ease;
+        -webkit-transition: opacity 1s ease;
 }
 .nivoo-slider:hover .direction-nav-hide,
 .direction-nav-hide:hover {
@@ -131,10 +130,15 @@
 /* control navigation */
 
 div.control-nav {
+    bottom: 0;
+    clear: both;
     height: 20px;
     line-height: 20px;
     margin: 10px 0 0;
+    position: absolute;
     text-align: center;
+    width: 100%;
+    z-index: 2;
 }
 div.control-nav a {
     color: #aaa;

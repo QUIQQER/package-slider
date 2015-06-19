@@ -54,7 +54,7 @@ define('package/quiqqer/slider/bin/Slider', [
 
             this.setAttributes({
                 styles : {
-                    height: 400
+                    height: 800
                 }
             });
         },
@@ -258,15 +258,38 @@ define('package/quiqqer/slider/bin/Slider', [
                             }
                         }
 
+                        var orientation = {
+                                fade               : 'vertical',
+                                fold               : 'vertical',
+                                random             : 'vertical',
+                                sliceLeftDown      : 'horizontal',
+                                sliceLeftUp        : 'horizontal',
+                                sliceLeftRightDown : 'horizontal',
+                                sliceLeftRightUp   : 'horizontal',
+                                sliceRightDown     : 'horizontal',
+                                sliceRightUp       : 'horizontal',
+                                wipeDown           : 'horizontal',
+                                wipeUp             : 'horizontal',
+                                sliceDownLeft      : 'vertical',
+                                sliceDownRight     : 'vertical',
+                                sliceUpDownLeft    : 'vertical',
+                                sliceUpDownRight   : 'vertical',
+                                sliceUpLeft        : 'vertical',
+                                sliceUpRight       : 'vertical',
+                                wipeLeft           : 'vertical',
+                                wipeRight          : 'vertical'
+                        };
+
                         new Slider(Container, {
+                            autoPlay    : this.$Elm.get('data-autostart') || false,
                             animSpeed   : this.$Elm.get('data-animspeed') || 500,
                             effect      : this.$Elm.get('data-effect') || 'fade',
                             interval    : this.getAttribute('period'),
-                            orientation : 'vertical',
+                            orientation : orientation[this.$Elm.get('data-effect')] || 'vertical',
                             slices      : this.$Elm.get('data-slices') || 10,
-                            directionNav         : this.getAttribute('showcontrolsalways'),
+                            directionNav         : this.getAttribute('showControlsAlways'),
                             directionNavHide     : false,
-                            directionNavPosition : 'outside',
+                            directionNavPosition : this.$Elm.get('data-controlsposition') || 'outside',
                             directionNavWidth    : '20%'
                         });
 

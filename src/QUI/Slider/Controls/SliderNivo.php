@@ -27,13 +27,15 @@ class SliderNivo extends Slider
         $this->_settings = array(
             'effect',
             'group',
-            'animSpeed',
+            'animspeed',
             'autostart',
             'shadow',
             'showControlsAlways',
             'showTitleAlways',
             'period',
-            'type'
+            'type',
+            'controlsPosition',
+            'slices'
         );
     }
 }

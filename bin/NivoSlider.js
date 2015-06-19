@@ -43,8 +43,17 @@ define('package/quiqqer/slider/bin/NivoSlider', [
         effects: {
             // used for random effects
             common: ['fade'],
-            horizontal: ['foldDown', 'foldUp', 'sliceLeftUp', 'sliceLeftDown', 'sliceLeftRightDown', 'sliceLeftRightUp', 'sliceRightDown', 'sliceRightUp', 'wipeDown', 'wipeUp'],
-            vertical: ['foldLeft', 'foldRight', 'sliceDownLeft', 'sliceDownRight', 'sliceUpDownLeft', 'sliceUpDownRight', 'sliceUpLeft', 'sliceUpRight', 'wipeLeft', 'wipeRight']
+            horizontal: [
+                'foldDown', 'foldUp',
+                'sliceLeftUp', 'sliceLeftDown', 'sliceLeftRightDown',
+                'sliceLeftRightUp', 'sliceRightDown', 'sliceRightUp',
+                'wipeDown', 'wipeUp'
+            ],
+            vertical: [
+                'foldLeft', 'foldRight',
+                'sliceDownLeft', 'sliceDownRight', 'sliceUpDownLeft', 'sliceUpDownRight',
+                'sliceUpLeft', 'sliceUpRight', 'wipeLeft', 'wipeRight'
+            ]
         },
         holder: null,
         hover: false,
@@ -92,6 +101,7 @@ define('package/quiqqer/slider/bin/NivoSlider', [
 
             this.initSlider();
             this.createSlices();
+            this.setBackgroundImage();
 
             window.addEvents({
                 resize : QUIFunctionsUtils.debounce(this.refresh.bind(this))
@@ -126,8 +136,8 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             if (this.slices) {
                 this.slices.destroy();
                 this.containerSize = this.holder.getSize();
-                this.createSlices();
 
+                this.createSlices();
                 this.setBackgroundImage();
             }
 
@@ -143,12 +153,12 @@ define('package/quiqqer/slider/bin/NivoSlider', [
 
             fx.start(fxStyles).chain(function () {
                 this.count += 1;
+
                 if (this.count === this.options.slices || isLast) {
                     this.running = false;
 
                     // fire onFinish function
                     this.finish();
-
                     this.setBackgroundImage();
 
                     this.count = 0;
@@ -165,38 +175,50 @@ define('package/quiqqer/slider/bin/NivoSlider', [
                 position,
                 width;
 
+            var optionSlices   = this.options.slices,
+                orientation    = this.orientation,
+                sliceSizeX     = this.sliceSize.x,
+                sliceSizeY     = this.sliceSize.y,
+                containerSizeX = this.containerSize.x,
+                containerSizeY = this.containerSize.y;
+
+
             this.slices.each(function (el, i) {
 
                 position = {
-                    left: this.orientation === 'vertical' ? this.sliceSize.x * i : 0,
-                    top: this.orientation === 'horizontal' ? this.sliceSize.y * i : 0
+                    left : orientation === 'vertical' ? sliceSizeX * i : 0,
+                    top  : orientation === 'horizontal' ? sliceSizeY * i : 0
                 };
 
                 // set size & position
-                if (this.orientation === 'horizontal') {
-                    height = i === this.options.slices - 1 ? this.containerSize.y - (this.sliceSize.y * i) : this.sliceSize.y;
-                    width = '100%';
+                if (orientation === 'horizontal') {
+                    height = i === optionSlices - 1 ? containerSizeY - (sliceSizeY * i) : sliceSizeY;
+                    width  = '100%';
 
                     el.setStyles({
-                        height: height,
-                        top: position.top,
-                        width: width
+                        height : height,
+                        top    : position.top,
+                        width  : width
                     });
                 } else { // if vertical
                     height = 0;
-                    width = i === this.options.slices - 1 ? this.containerSize.x - (this.sliceSize.x * i) : this.sliceSize.x;
+                    width  = i === optionSlices - 1 ? containerSizeX - (sliceSizeX * i) : sliceSizeX;
 
                     el.setStyles({
-                        height: height,
-                        left: position.left,
-                        top: '',
-                        width: width
+                        height : height,
+                        left   : position.left,
+                        top    : '',
+                        width  : width
                     });
                 }
 
                 el.store('fxInstance', new Fx.Morph(el, {
                     duration: this.options.animSpeed
-                })).store('coordinates', Object.merge(position, {height: height, width: width}));
+                })).store('coordinates', Object.merge(position, {
+                    height : height,
+                    width  : width
+                }));
+
             }, this);
         },
 
@@ -208,8 +230,8 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             }).inject(this.holder);
 
             this.caption.store('fxInstance', new Fx.Morph(this.caption, {
-                duration: 200,
-                wait: false
+                duration : 200,
+                wait     : false
             }));
         },
 
@@ -220,7 +242,14 @@ define('package/quiqqer/slider/bin/NivoSlider', [
 
             this.container.addClass('got-control-nav');
 
-            new Element('div.control-nav').inject(this.container);
+            var Nav = new Element('div.control-nav').inject(this.container);
+
+            if (this.options.directionNavPosition === 'inside') {
+                Nav.setStyles({
+                    height     : 46,
+                    lineHeight : 40
+                });
+            }
 
             this.totalSlides.each(function (el) {
                 if (this.options.controlNavItem === 'decimal') {
@@ -259,7 +288,9 @@ define('package/quiqqer/slider/bin/NivoSlider', [
 
             directionNavStyles = {};
 
-            if (this.options.directionNavPosition === 'inside' && this.options.directionNavWidth.toInt() !== 0) {
+            if (this.options.directionNavPosition === 'inside' &&
+                this.options.directionNavWidth.toInt() !== 0)
+            {
                 directionNavStyles.width = this.options.directionNavWidth;
             }
 
@@ -325,19 +356,21 @@ define('package/quiqqer/slider/bin/NivoSlider', [
 
         createSlices: function ()
         {
+            var slices = this.options.slices;
+
             this.sliceSize = {
-                x: (this.containerSize.x / this.options.slices).round(),
-                y: (this.containerSize.y / this.options.slices).round()
+                x: (this.containerSize.x / slices).round(),
+                y: (this.containerSize.y / slices).round()
             };
 
             // effects that need one slice only
             if (['fade', 'wipeLeft', 'wipeRight'].contains(this.options.effect)) {
-                this.options.slices = 1;
+                slices = 1;
             }
 
-            this.options.slices.each(function () {
+            for (var i = 0, len = slices; i < len; i++) {
                 new Element('div.nivoo-slice').inject(this.holder);
-            }, this);
+            }
 
             this.slices = this.getSlices();
 
@@ -351,11 +384,13 @@ define('package/quiqqer/slider/bin/NivoSlider', [
         getOrientation: function () {
             if (this.effects.horizontal.indexOf(this.options.effect) > -1) {
                 return 'horizontal';
-            } else if (this.effects.vertical.indexOf(this.options.effect) > -1) {
-                return 'vertical';
-            } else {
-                return this.options.orientation;
             }
+
+            if (this.effects.vertical.indexOf(this.options.effect) > -1) {
+                return 'vertical';
+            }
+
+            return this.options.orientation;
         },
 
         getSlices: function () {
@@ -367,10 +402,27 @@ define('package/quiqqer/slider/bin/NivoSlider', [
                 this.container.addClass('direction-nav-outside');
             }
 
+            if (this.options.slices) {
+                this.options.slices = parseInt(this.options.slices);
+
+                if (!this.options.slices) {
+                    this.options.slices = 10;
+                }
+            }
+
             // wrap child elements
             this.holder = new Element('div.nivoo-slider-holder').adopt(
                 this.container.getChildren()
             ).inject(this.container);
+
+            if (this.options.directionNavPosition == 'inside') {
+                this.holder.setStyle('width', '100%');
+                this.holder.setStyle('height', '100%');
+
+            } else {
+                this.holder.setStyle('width', 'calc(100% - 120px)');
+                this.holder.setStyle('height', 'calc(100% - 20px)');
+            }
 
             this.children = this.getImages();
 
@@ -393,7 +445,6 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             this.createLinkHolder();
             this.setLink();
 
-            // Set first background
             this.setBackgroundImage();
             this.createCaption();
             this.showCaption();

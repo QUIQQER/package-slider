@@ -50,6 +50,7 @@
 .quiqqer-slider-imageDataList-entry-text {
     float: left;
     line-height: 40px;
+    max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
     transition: all 0.2s ease;
