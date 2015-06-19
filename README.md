@@ -65,3 +65,31 @@ License
 
 Entwickler
 --------
+
+Das Paket bringt ein Slider Control und Brick mit.
+
+JavaScript
+
+```javascript
+
+require(['package/quiqqer/slider/bin/Slider'], function(Slider) {
+
+    new Slider({
+        type      : 'nivo'
+        autostart : true
+    }).inject(Container);
+
+});
+
+```
+
+PHP
+
+```php
+<?php
+
+$Slider = new QUI\Slider\Controls\Slider();
+$Nivo = new QUI\Slider\Controls\SliderNivo();
+
+?>
+```
