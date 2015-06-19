@@ -345,8 +345,8 @@ define('package/quiqqer/slider/bin/Slider', [
                     holderSize.x
                 );
 
-                if (maxHeight < result.var2) {
-                    maxHeight = result.var2;
+                if (maxHeight < result.var1) {
+                    maxHeight = result.var1;
                 }
             });
 
