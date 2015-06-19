@@ -101,6 +101,8 @@ define('package/quiqqer/slider/bin/Slider', [
                 this.setAttribute('type', this.$Elm.get('data-type'));
             }
 
+            this.getElm().setStyle('height', 300);
+
             switch (this.getAttribute('type')) {
                 case 'nivo':
                     this.$loadNivoSlider();
