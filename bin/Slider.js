@@ -54,7 +54,7 @@ define('package/quiqqer/slider/bin/Slider', [
 
             this.setAttributes({
                 styles : {
-                    height: 800
+                    height: 300
                 }
             });
         },
