@@ -259,25 +259,25 @@ define('package/quiqqer/slider/bin/Slider', [
                         }
 
                         var orientation = {
-                                fade               : 'vertical',
-                                fold               : 'vertical',
-                                random             : 'vertical',
-                                sliceLeftDown      : 'horizontal',
-                                sliceLeftUp        : 'horizontal',
-                                sliceLeftRightDown : 'horizontal',
-                                sliceLeftRightUp   : 'horizontal',
-                                sliceRightDown     : 'horizontal',
-                                sliceRightUp       : 'horizontal',
-                                wipeDown           : 'horizontal',
-                                wipeUp             : 'horizontal',
-                                sliceDownLeft      : 'vertical',
-                                sliceDownRight     : 'vertical',
-                                sliceUpDownLeft    : 'vertical',
-                                sliceUpDownRight   : 'vertical',
-                                sliceUpLeft        : 'vertical',
-                                sliceUpRight       : 'vertical',
-                                wipeLeft           : 'vertical',
-                                wipeRight          : 'vertical'
+                            fade               : 'vertical',
+                            fold               : 'vertical',
+                            random             : 'vertical',
+                            sliceLeftDown      : 'horizontal',
+                            sliceLeftUp        : 'horizontal',
+                            sliceLeftRightDown : 'horizontal',
+                            sliceLeftRightUp   : 'horizontal',
+                            sliceRightDown     : 'horizontal',
+                            sliceRightUp       : 'horizontal',
+                            wipeDown           : 'horizontal',
+                            wipeUp             : 'horizontal',
+                            sliceDownLeft      : 'vertical',
+                            sliceDownRight     : 'vertical',
+                            sliceUpDownLeft    : 'vertical',
+                            sliceUpDownRight   : 'vertical',
+                            sliceUpLeft        : 'vertical',
+                            sliceUpRight       : 'vertical',
+                            wipeLeft           : 'vertical',
+                            wipeRight          : 'vertical'
                         };
 
                         new Slider(Container, {
