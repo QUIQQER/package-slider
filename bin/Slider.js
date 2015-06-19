@@ -14,10 +14,12 @@ define('package/quiqqer/slider/bin/Slider', [
     'qui/QUI',
     'qui/controls/Control',
     'qui/controls/loader/Loader',
+    'qui/utils/Functions',
+    'qui/utils/Math',
 
     'css!package/quiqqer/slider/bin/Slider.css'
 
-], function(QUI, QUIControl, QUILoader)
+], function(QUI, QUIControl, QUILoader, QUIFunctionsUtils, QUIMathUtils)
 {
     "use strict";
 
@@ -50,12 +52,6 @@ define('package/quiqqer/slider/bin/Slider', [
             this.addEvents({
                 onImport : this.$__onImport,
                 onInject : this.$__onInject
-            });
-
-            this.setAttributes({
-                styles : {
-                    height: 300
-                }
             });
         },
 
@@ -258,6 +254,14 @@ define('package/quiqqer/slider/bin/Slider', [
                             }
                         }
 
+                        var maxHeight = this.$getMaxHeightOfImages(
+                            Container.getElements('img')
+                        );
+
+                        this.getElm().setStyles({
+                            height: maxHeight
+                        });
+
                         var orientation = {
                             fade               : 'vertical',
                             fold               : 'vertical',
@@ -280,7 +284,7 @@ define('package/quiqqer/slider/bin/Slider', [
                             wipeRight          : 'vertical'
                         };
 
-                        new Slider(Container, {
+                        this.$Slider = new Slider(Container, {
                             autoPlay    : this.$Elm.get('data-autostart') || false,
                             animSpeed   : this.$Elm.get('data-animspeed') || 500,
                             effect      : this.$Elm.get('data-effect') || 'fade',
@@ -295,10 +299,56 @@ define('package/quiqqer/slider/bin/Slider', [
 
                         this.Loader.hide();
 
+
+                        window.addEvents({
+                            resize : QUIFunctionsUtils.debounce(function()
+                            {
+                                var maxHeight = this.$getMaxHeightOfImages(
+                                    Container.getElements('img')
+                                );
+
+                                this.getElm().setStyles({
+                                    height: maxHeight
+                                });
+
+                                this.$Slider.refresh();
+
+                            }.bind(this))
+                        });
+
+
                     }.bind(this)
                 });
 
             }.bind(this));
+        },
+
+        /**
+         *
+         * @param nodeList
+         * @returns {number}
+         */
+        $getMaxHeightOfImages : function(nodeList)
+        {
+            var maxHeight = 0,
+                holderSize = this.getElm().getSize();
+
+            nodeList.each(function(Img) {
+
+                var imgSize = Img.getSize();
+
+                var result = QUIMathUtils.resizeVar(
+                    imgSize.y,
+                    imgSize.x,
+                    holderSize.x
+                );
+
+                if (maxHeight < result.var2) {
+                    maxHeight = result.var2;
+                }
+            });
+
+            return maxHeight;
         }
     });
 });

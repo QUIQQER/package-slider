@@ -427,10 +427,10 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             this.children = this.getImages();
 
             this.holderImage = new Element('img', {
-                src : this.children[0].get('src'),
+                src     : this.children[0].get('src'),
                 'class' : 'nivoo-slider-holder-image',
-                styles : {
-                    maxWidth : '100%',
+                styles  : {
+                    maxWidth  : '100%',
                     maxHeight : '100%'
                 }
             }).inject(this.holder);
