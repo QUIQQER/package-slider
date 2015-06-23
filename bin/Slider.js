@@ -72,9 +72,11 @@ define('package/quiqqer/slider/bin/Slider', [
                 this.$Elm.addClass('quiqqer-slider');
             }
 
-            this.$Elm.setStyles(this.getAttribute('styles'));
+            if (this.getAttribute('styles')) {
+                this.$Elm.setStyles(this.getAttribute('styles'));
+            }
 
-            this.Loader.inject( this.$Elm );
+            this.Loader.inject(this.$Elm);
 
             // settings
             if (this.$Elm.get('data-period')) {
@@ -100,8 +102,6 @@ define('package/quiqqer/slider/bin/Slider', [
             if (this.$Elm.get('data-type')) {
                 this.setAttribute('type', this.$Elm.get('data-type'));
             }
-
-            this.getElm().setStyle('height', 300);
 
             switch (this.getAttribute('type')) {
                 case 'nivo':
@@ -333,7 +333,12 @@ define('package/quiqqer/slider/bin/Slider', [
         $getMaxHeightOfImages : function(nodeList)
         {
             var maxHeight = 0,
-                holderSize = this.getElm().getSize();
+                holderSize = this.getElm().getSize(),
+                holderSizeHeight = holderSize.y;
+
+            if (holderSizeHeight === 0) {
+                holderSizeHeight = 300;
+            }
 
             nodeList.each(function(Img) {
 
@@ -342,11 +347,11 @@ define('package/quiqqer/slider/bin/Slider', [
                 var result = QUIMathUtils.resizeVar(
                     imgSize.y,
                     imgSize.x,
-                    holderSize.x
+                    holderSizeHeight
                 );
 
-                if (maxHeight < result.var1) {
-                    maxHeight = result.var1;
+                if (maxHeight < result.var2) {
+                    maxHeight = result.var2;
                 }
             });
 
