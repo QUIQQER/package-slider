@@ -115,6 +115,11 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
                 return;
             }
 
+            if (typeOf(Project) != 'object') {
+                console.error('No classes/projects/Project or object given');
+                return;
+            }
+
             require(['Projects'], function(Projects) {
                 this.$Project = Projects.get(Project);
                 this.$elements.AddButton.enable();
@@ -366,7 +371,7 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
         /**
          * Set the data for an image entry
          *
-         * @param {HTMLElement} Entry
+         * @param {HTMLDivElement} Entry
          * @param {Object} data
          */
         $setData : function(Entry, data)
