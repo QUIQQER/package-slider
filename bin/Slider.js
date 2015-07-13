@@ -294,8 +294,7 @@ define('package/quiqqer/slider/bin/Slider', [
                         slices      : this.$Elm.get('data-slices') || 10,
                         directionNav         : this.getAttribute('showControlsAlways'),
                         directionNavHide     : false,
-                        directionNavPosition : this.$Elm.get('data-controlsposition') || 'outside',
-                        directionNavWidth    : '20%'
+                        directionNavPosition : this.$Elm.get('data-controlsposition') || 'outside'
                     });
 
                     this.Loader.hide();

@@ -115,7 +115,7 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
                 return;
             }
 
-            if (typeOf(Project) != 'object') {
+            if (typeOf(Project) != 'object' && typeOf(Project) != 'string') {
                 console.error('No classes/projects/Project or object given');
                 return;
             }

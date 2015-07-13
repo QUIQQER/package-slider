@@ -279,29 +279,15 @@ define('package/quiqqer/slider/bin/NivoSlider', [
         },
 
         createDirectionNav: function () {
-            var directionNavStyles,
-                leftContainer,
+            var leftContainer,
                 rightContainer,
                 target;
 
             target = this.options.directionNavPosition === 'inside' ? this.holder : this.container;
 
-            directionNavStyles = {};
-
-            if (this.options.directionNavPosition === 'inside' &&
-                this.options.directionNavWidth.toInt() !== 0)
-            {
-                directionNavStyles.width = this.options.directionNavWidth;
-            }
-
             // create container
-            leftContainer = new Element('div.direction-nav-left', {
-                styles: directionNavStyles
-            }).inject(target);
-
-            rightContainer = new Element('div.direction-nav-right', {
-                styles: directionNavStyles
-            }).inject(target);
+            leftContainer = new Element('div.direction-nav-left').inject(target);
+            rightContainer = new Element('div.direction-nav-right').inject(target);
 
             // create controls
             this.leftNav = new Element('a', {
