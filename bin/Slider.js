@@ -6,7 +6,10 @@
  * @module package/quiqqer/slider/bin/Slider
  *
  * @require qui/QUI
- * @require package/quiqqer/gallery/bin/controls/Slider
+ * @require qui/controls/Control
+ * @require qui/controls/loader/Loader
+ * @require qui/utils/Functions
+ * @require qui/utils/Math
  * @require css!package/quiqqer/slider/bin/Slider.css
  */
 define('package/quiqqer/slider/bin/Slider', [
@@ -230,102 +233,101 @@ define('package/quiqqer/slider/bin/Slider', [
 
 
                 for (var i = 0, len = images.length; i < len; i++) {
-                    files.push(images[i].image);
+                    files.push('image!'+images[i].image);
                 }
 
-                Asset.images(files, {
-                    onComplete : function()
+                require(files, function()
+                {
+                    var Img, Entry;
+
+                    for (i = 0, len = images.length; i < len; i++)
                     {
-                        var Img, Entry;
+                        Entry = images[i];
 
-                        for (i = 0, len = images.length; i < len; i++)
+                        Img = new Element('img', {
+                            src : Entry.image
+                        });
+
+                        Img.inject(Container);
+
+                        if (images[i].href && images[i].href.trim() !== '') {
+                            new Element('a', {
+                                href   : Entry.href,
+                                target : Entry.target
+                            }).wraps(Img);
+                        }
+                    }
+
+                    var maxHeight = this.$getMaxHeightOfImages(
+                        Container.getElements('img')
+                    );
+
+                    this.getElm().setStyles({
+                        height: maxHeight
+                    });
+
+                    var orientation = {
+                        fade               : 'vertical',
+                        fold               : 'vertical',
+                        random             : 'vertical',
+                        sliceLeftDown      : 'horizontal',
+                        sliceLeftUp        : 'horizontal',
+                        sliceLeftRightDown : 'horizontal',
+                        sliceLeftRightUp   : 'horizontal',
+                        sliceRightDown     : 'horizontal',
+                        sliceRightUp       : 'horizontal',
+                        wipeDown           : 'horizontal',
+                        wipeUp             : 'horizontal',
+                        sliceDownLeft      : 'vertical',
+                        sliceDownRight     : 'vertical',
+                        sliceUpDownLeft    : 'vertical',
+                        sliceUpDownRight   : 'vertical',
+                        sliceUpLeft        : 'vertical',
+                        sliceUpRight       : 'vertical',
+                        wipeLeft           : 'vertical',
+                        wipeRight          : 'vertical'
+                    };
+
+                    this.$Slider = new Slider(Container, {
+                        autoPlay    : this.$Elm.get('data-autostart') || false,
+                        animSpeed   : this.$Elm.get('data-animspeed') || 500,
+                        effect      : this.$Elm.get('data-effect') || 'fade',
+                        interval    : this.getAttribute('period'),
+                        orientation : orientation[this.$Elm.get('data-effect')] || 'vertical',
+                        slices      : this.$Elm.get('data-slices') || 10,
+                        directionNav         : this.getAttribute('showControlsAlways'),
+                        directionNavHide     : false,
+                        directionNavPosition : this.$Elm.get('data-controlsposition') || 'outside',
+                        directionNavWidth    : '20%'
+                    });
+
+                    this.Loader.hide();
+
+
+                    window.addEvents({
+                        resize : QUIFunctionsUtils.debounce(function()
                         {
-                            Entry = images[i];
+                            var maxHeight = this.$getMaxHeightOfImages(
+                                Container.getElements('img')
+                            );
 
-                            Img = new Element('img', {
-                                src : Entry.image
+                            this.getElm().setStyles({
+                                height: maxHeight
                             });
 
-                            Img.inject(Container);
+                            this.$Slider.refresh();
 
-                            if (images[i].href && images[i].href.trim() !== '') {
-                                new Element('a', {
-                                    href   : Entry.href,
-                                    target : Entry.target
-                                }).wraps(Img);
-                            }
-                        }
-
-                        var maxHeight = this.$getMaxHeightOfImages(
-                            Container.getElements('img')
-                        );
-
-                        this.getElm().setStyles({
-                            height: maxHeight
-                        });
-
-                        var orientation = {
-                            fade               : 'vertical',
-                            fold               : 'vertical',
-                            random             : 'vertical',
-                            sliceLeftDown      : 'horizontal',
-                            sliceLeftUp        : 'horizontal',
-                            sliceLeftRightDown : 'horizontal',
-                            sliceLeftRightUp   : 'horizontal',
-                            sliceRightDown     : 'horizontal',
-                            sliceRightUp       : 'horizontal',
-                            wipeDown           : 'horizontal',
-                            wipeUp             : 'horizontal',
-                            sliceDownLeft      : 'vertical',
-                            sliceDownRight     : 'vertical',
-                            sliceUpDownLeft    : 'vertical',
-                            sliceUpDownRight   : 'vertical',
-                            sliceUpLeft        : 'vertical',
-                            sliceUpRight       : 'vertical',
-                            wipeLeft           : 'vertical',
-                            wipeRight          : 'vertical'
-                        };
-
-                        this.$Slider = new Slider(Container, {
-                            autoPlay    : this.$Elm.get('data-autostart') || false,
-                            animSpeed   : this.$Elm.get('data-animspeed') || 500,
-                            effect      : this.$Elm.get('data-effect') || 'fade',
-                            interval    : this.getAttribute('period'),
-                            orientation : orientation[this.$Elm.get('data-effect')] || 'vertical',
-                            slices      : this.$Elm.get('data-slices') || 10,
-                            directionNav         : this.getAttribute('showControlsAlways'),
-                            directionNavHide     : false,
-                            directionNavPosition : this.$Elm.get('data-controlsposition') || 'outside',
-                            directionNavWidth    : '20%'
-                        });
-
-                        this.Loader.hide();
+                        }.bind(this))
+                    });
 
 
-                        window.addEvents({
-                            resize : QUIFunctionsUtils.debounce(function()
-                            {
-                                var maxHeight = this.$getMaxHeightOfImages(
-                                    Container.getElements('img')
-                                );
-
-                                this.getElm().setStyles({
-                                    height: maxHeight
-                                });
-
-                                this.$Slider.refresh();
-
-                            }.bind(this))
-                        });
-
-
-                    }.bind(this)
-                });
+                }.bind(this));
 
             }.bind(this));
         },
 
         /**
+         * Return the max height of all images
          *
          * @param nodeList
          * @returns {number}
