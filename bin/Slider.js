@@ -212,10 +212,7 @@ define('package/quiqqer/slider/bin/Slider', [
         {
             this.Loader.show();
 
-            require([
-                'package/quiqqer/slider/bin/NivoSlider',
-                URL_BIN_DIR +'QUI/lib/Assets.js'
-            ], function(Slider)
+            require(['package/quiqqer/slider/bin/NivoSlider'], function(Slider)
             {
                 var files  = [],
                     images = this.getImageData();
