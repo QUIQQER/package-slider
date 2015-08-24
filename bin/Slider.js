@@ -1,4 +1,3 @@
-
 /**
  * Slider
  *
@@ -22,55 +21,53 @@ define('package/quiqqer/slider/bin/Slider', [
 
     'css!package/quiqqer/slider/bin/Slider.css'
 
-], function(QUI, QUIControl, QUILoader, QUIFunctionsUtils, QUIMathUtils)
-{
+], function (QUI, QUIControl, QUILoader, QUIFunctionsUtils, QUIMathUtils) {
     "use strict";
 
     return new Class({
 
-        Extends : QUIControl,
-        Type : 'package/quiqqer/slider/bin/Slider',
+        Extends: QUIControl,
+        Type   : 'package/quiqqer/slider/bin/Slider',
 
-        Binds : [
+        Binds: [
             '$__onImport',
             '$__onInject',
             '$animateInBegin'
         ],
 
-        options : {
-            type   : 'standard', // standard / nivo
-            period : 5000,
-            shadow : false,
-            showcontrolsalways : true,
-            showtitlealways    : true,
-            autostart : true
+        options: {
+            type              : 'standard', // standard / nivo
+            period            : 5000,
+            shadow            : false,
+            showcontrolsalways: true,
+            showtitlealways   : true,
+            autostart         : true
         },
 
-        initialize : function(options)
-        {
+        initialize: function (options) {
             this.parent(options);
 
             this.Loader = new QUILoader();
 
+            this.$images = [];
+
             this.addEvents({
-                onImport : this.$__onImport,
-                onInject : this.$__onInject
+                onImport: this.$__onImport,
+                onInject: this.$__onInject
             });
         },
 
         /**
          * event : on import
          */
-        $__onImport : function()
-        {
+        $__onImport: function () {
             this.$__onInject();
         },
 
         /**
          * event : on inject
          */
-        $__onInject : function()
-        {
+        $__onInject: function () {
             if (!this.$Elm.hasClass('quiqqer-slider')) {
                 this.$Elm.addClass('quiqqer-slider');
             }
@@ -121,11 +118,10 @@ define('package/quiqqer/slider/bin/Slider', [
          *
          * @return {Array}
          */
-        getImageData : function()
-        {
+        getImageData: function () {
             var i, len, Entry;
 
-            var result = [];
+            var result  = [];
             var entries = this.getElm().getElements('.quiqqer-slider-image');
 
             for (i = 0, len = entries.length; i < len; i++) {
@@ -136,46 +132,69 @@ define('package/quiqqer/slider/bin/Slider', [
                 }
 
                 result.push({
-                    image  : Entry.get('data-src'),
-                    title  : Entry.getElement('.title').get('html'),
-                    text   : Entry.getElement('.text').get('html'),
-                    target : Entry.get('data-target'),
-                    href   : Entry.get('data-href')
+                    image : Entry.get('data-src'),
+                    title : Entry.getElement('.title').get('html'),
+                    text  : Entry.getElement('.text').get('html'),
+                    target: Entry.get('data-target'),
+                    href  : Entry.get('data-href')
                 });
             }
+
+            result = Object.merge(this.$images, result);
 
             return result;
         },
 
         /**
+         * Add an image via javascript
+         *
+         * @param {String} imageSrc - source of the image
+         * @param {String} title - title to show
+         * @param {String} text - text to show
+         * @param {String} href - link
+         * @param {String} target - target of the link
+         */
+        addImage: function (imageSrc, title, text, href, target) {
+            this.$images.push({
+                image : imageSrc,
+                title : title || '',
+                text  : text || '',
+                target: target || '',
+                href  : href || ''
+            });
+        },
+
+        /**
          * Standard slider
          */
-        $loadStandard : function()
-        {
-            require(['package/quiqqer/gallery/bin/controls/Slider'], function(Slider)
-            {
+        $loadStandard: function () {
+            require(['package/quiqqer/gallery/bin/controls/Slider'], function (Slider) {
                 var images = this.getImageData();
 
                 this.$Slider = new Slider({
-                    period : this.getAttribute('period'),
-                    shadow : this.getAttribute('shadow'),
-                    showControlsAlways : this.getAttribute('showcontrolsalways'),
-                    showTitleAlways    : this.getAttribute('showtitlealways'),
+                    period            : this.getAttribute('period'),
+                    shadow            : this.getAttribute('shadow'),
+                    showControlsAlways: this.getAttribute('showcontrolsalways'),
+                    showTitleAlways   : this.getAttribute('showtitlealways'),
 
-                    styles : {
-                        height : this.getElm().getSize().y
+                    styles: {
+                        height: this.getElm().getSize().y
                     },
-                    events : {
-                        onAnimateInBegin : function(self, Elm) {
+                    events: {
+                        onAnimateInBegin: function (self, Elm) {
                             var no = Elm.get('data-no');
 
                             if (typeof images[no] === 'undefined') {
                                 return;
                             }
 
+                            if (images[no].href === '') {
+                                return;
+                            }
+
                             new Element('a', {
-                                href   : images[no].href,
-                                target : images[no].target
+                                href  : images[no].href,
+                                target: images[no].target
                             }).wraps(Elm);
                         }.bind(this)
                     }
@@ -194,7 +213,7 @@ define('package/quiqqer/slider/bin/Slider', [
 
                 if (this.getAttribute('autostart')) {
 
-                    this.$Slider.showFirst().then(function() {
+                    this.$Slider.showFirst().then(function () {
                         this.$Slider.autoplay();
                     }.bind(this));
 
@@ -208,49 +227,45 @@ define('package/quiqqer/slider/bin/Slider', [
         /**
          * Load the Nivo Slider
          */
-        $loadNivoSlider : function()
-        {
+        $loadNivoSlider: function () {
             this.Loader.show();
 
-            require(['package/quiqqer/slider/bin/NivoSlider'], function(Slider)
-            {
+            require(['package/quiqqer/slider/bin/NivoSlider'], function (Slider) {
                 var files  = [],
                     images = this.getImageData();
 
                 // create the html
                 var Container = new Element('div', {
-                    styles : {
-                        height   : '100%',
-                        left     : 0,
-                        position : 'absolute',
-                        top      : 0,
-                        width    : '100%'
+                    styles: {
+                        height  : '100%',
+                        left    : 0,
+                        position: 'absolute',
+                        top     : 0,
+                        width   : '100%'
                     }
                 }).inject(this.getElm());
 
 
                 for (var i = 0, len = images.length; i < len; i++) {
-                    files.push('image!'+images[i].image);
+                    files.push('image!' + images[i].image);
                 }
 
-                require(files, function()
-                {
+                require(files, function () {
                     var Img, Entry;
 
-                    for (i = 0, len = images.length; i < len; i++)
-                    {
+                    for (i = 0, len = images.length; i < len; i++) {
                         Entry = images[i];
 
                         Img = new Element('img', {
-                            src : Entry.image
+                            src: Entry.image
                         });
 
                         Img.inject(Container);
 
                         if (images[i].href && images[i].href.trim() !== '') {
                             new Element('a', {
-                                href   : Entry.href,
-                                target : Entry.target
+                                href  : Entry.href,
+                                target: Entry.target
                             }).wraps(Img);
                         }
                     }
@@ -264,45 +279,44 @@ define('package/quiqqer/slider/bin/Slider', [
                     });
 
                     var orientation = {
-                        fade               : 'vertical',
-                        fold               : 'vertical',
-                        random             : 'vertical',
-                        sliceLeftDown      : 'horizontal',
-                        sliceLeftUp        : 'horizontal',
-                        sliceLeftRightDown : 'horizontal',
-                        sliceLeftRightUp   : 'horizontal',
-                        sliceRightDown     : 'horizontal',
-                        sliceRightUp       : 'horizontal',
-                        wipeDown           : 'horizontal',
-                        wipeUp             : 'horizontal',
-                        sliceDownLeft      : 'vertical',
-                        sliceDownRight     : 'vertical',
-                        sliceUpDownLeft    : 'vertical',
-                        sliceUpDownRight   : 'vertical',
-                        sliceUpLeft        : 'vertical',
-                        sliceUpRight       : 'vertical',
-                        wipeLeft           : 'vertical',
-                        wipeRight          : 'vertical'
+                        fade              : 'vertical',
+                        fold              : 'vertical',
+                        random            : 'vertical',
+                        sliceLeftDown     : 'horizontal',
+                        sliceLeftUp       : 'horizontal',
+                        sliceLeftRightDown: 'horizontal',
+                        sliceLeftRightUp  : 'horizontal',
+                        sliceRightDown    : 'horizontal',
+                        sliceRightUp      : 'horizontal',
+                        wipeDown          : 'horizontal',
+                        wipeUp            : 'horizontal',
+                        sliceDownLeft     : 'vertical',
+                        sliceDownRight    : 'vertical',
+                        sliceUpDownLeft   : 'vertical',
+                        sliceUpDownRight  : 'vertical',
+                        sliceUpLeft       : 'vertical',
+                        sliceUpRight      : 'vertical',
+                        wipeLeft          : 'vertical',
+                        wipeRight         : 'vertical'
                     };
 
                     this.$Slider = new Slider(Container, {
-                        autoPlay    : this.$Elm.get('data-autostart') || false,
-                        animSpeed   : this.$Elm.get('data-animspeed') || 500,
-                        effect      : this.$Elm.get('data-effect') || 'fade',
-                        interval    : this.getAttribute('period'),
-                        orientation : orientation[this.$Elm.get('data-effect')] || 'vertical',
-                        slices      : this.$Elm.get('data-slices') || 10,
-                        directionNav         : this.getAttribute('showControlsAlways'),
-                        directionNavHide     : false,
-                        directionNavPosition : this.$Elm.get('data-controlsposition') || 'outside'
+                        autoPlay            : this.$Elm.get('data-autostart') || false,
+                        animSpeed           : this.$Elm.get('data-animspeed') || 500,
+                        effect              : this.$Elm.get('data-effect') || 'fade',
+                        interval            : this.getAttribute('period'),
+                        orientation         : orientation[this.$Elm.get('data-effect')] || 'vertical',
+                        slices              : this.$Elm.get('data-slices') || 10,
+                        directionNav        : this.getAttribute('showControlsAlways'),
+                        directionNavHide    : false,
+                        directionNavPosition: this.$Elm.get('data-controlsposition') || 'outside'
                     });
 
                     this.Loader.hide();
 
 
                     window.addEvents({
-                        resize : QUIFunctionsUtils.debounce(function()
-                        {
+                        resize: QUIFunctionsUtils.debounce(function () {
                             var maxHeight = this.$getMaxHeightOfImages(
                                 Container.getElements('img')
                             );
@@ -328,17 +342,16 @@ define('package/quiqqer/slider/bin/Slider', [
          * @param nodeList
          * @returns {number}
          */
-        $getMaxHeightOfImages : function(nodeList)
-        {
-            var maxHeight = 0,
-                holderSize = this.getElm().getSize(),
+        $getMaxHeightOfImages: function (nodeList) {
+            var maxHeight        = 0,
+                holderSize       = this.getElm().getSize(),
                 holderSizeHeight = holderSize.y;
 
             if (holderSizeHeight === 0) {
                 holderSizeHeight = 300;
             }
 
-            nodeList.each(function(Img) {
+            nodeList.each(function (Img) {
 
                 var imgSize = Img.getSize();
 
