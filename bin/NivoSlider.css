@@ -152,6 +152,7 @@ div.control-nav {
     z-index: 2;
 }
 div.control-nav a {
+    border: none;
     color: #aaa;
     font-size: 50px;
     outline: none;
