@@ -24,7 +24,7 @@ class SliderNivo extends Slider
 
         $this->setAttribute('type', 'nivo');
 
-        $this->_settings = array(
+        $this->settings = array(
             'effect',
             'group',
             'animspeed',

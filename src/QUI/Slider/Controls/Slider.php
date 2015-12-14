@@ -22,45 +22,45 @@ class Slider extends QUI\Control
      *
      * @var array
      */
-    protected $_data = array();
+    protected $data = array();
 
     /**
      * internal image parsing flag
      *
      * @var bool
      */
-    protected $_imagesParsing = false;
+    protected $imagesParsing = false;
 
     /**
      * @var array
      */
-    protected $_settings = array();
+    protected $settings = array();
 
     /**
      * constructor
      *
-     * @param Array $attributes
+     * @param array $attributes
      */
     public function __construct($attributes = array())
     {
         // default options
         $this->setAttributes(array(
-            'title'     => '',
-            'text'      => '',
-            'class'     => 'quiqqer-slider',
-            'nodeName'  => 'section',
+            'title' => '',
+            'text' => '',
+            'class' => 'quiqqer-slider',
+            'nodeName' => 'section',
             'qui-class' => 'package/quiqqer/slider/bin/Slider'
         ));
 
         $this->addCSSFile(
-            dirname(__FILE__).'/Slider.css'
+            dirname(__FILE__) . '/Slider.css'
         );
 
         $this->addCSSFile(
-            OPT_DIR.'quiqqer/gallery/lib/QUI/Gallery/Controls/Slider.css'
+            OPT_DIR . 'quiqqer/gallery/lib/QUI/Gallery/Controls/Slider.css'
         );
 
-        $this->_settings = array(
+        $this->settings = array(
             'autostart',
             'shadow',
             'showControlsAlways',
@@ -70,7 +70,7 @@ class Slider extends QUI\Control
         );
 
 
-        parent::setAttributes($attributes);
+        parent::__construct($attributes);
 
         $this->setAttribute('type', 'standard');
     }
@@ -84,12 +84,10 @@ class Slider extends QUI\Control
     {
         $Engine = QUI::getTemplateManager()->getEngine();
 
-        if (!$this->_imagesParsing && $this->getAttribute('images')) {
-
+        if (!$this->imagesParsing && $this->getAttribute('images')) {
             $images = json_decode($this->getAttribute('images'), true);
 
             foreach ($images as $image) {
-
                 $this->addImage(
                     $image['image'],
                     $image['link'],
@@ -98,22 +96,22 @@ class Slider extends QUI\Control
             }
         }
 
-        foreach ($this->_settings as $setting) {
-            $this->setAttribute('data-'.$setting, $this->getAttribute($setting));
+        foreach ($this->settings as $setting) {
+            $this->setAttribute('data-' . $setting, $this->getAttribute($setting));
         }
 
         $Engine->assign(array(
-            'this'  => $this
+            'this' => $this
         ));
 
 
-        return $Engine->fetch(dirname(__FILE__).'/Slider.html');
+        return $Engine->fetch(dirname(__FILE__) . '/Slider.html');
     }
 
     /**
      * Add an image to the slider
      *
-     * @param string      $imagePath
+     * @param string $imagePath
      * @param string|bool $link
      * @param string|bool $text
      */
@@ -130,13 +128,11 @@ class Slider extends QUI\Control
         }
 
         try {
-
             if (SiteUtils::isSiteLink($link)) {
                 $link = SiteUtils::rewriteSiteLink($link);
             }
 
         } catch (QUI\Exception $Exception) {
-
             QUI\System\Log::addDebug('##################');
             QUI\System\Log::addDebug($link);
             QUI\System\Log::addDebug($Exception->getMessage());
@@ -146,9 +142,9 @@ class Slider extends QUI\Control
             }
         }
 
-        $this->_data[] = array(
-            'link'  => $link,
-            'text'  => $text,
+        $this->data[] = array(
+            'link' => $link,
+            'text' => $text,
             'image' => $Image
         );
     }
@@ -160,7 +156,7 @@ class Slider extends QUI\Control
      */
     public function getList()
     {
-        return $this->_data;
+        return $this->data;
     }
 
     /**
@@ -172,7 +168,7 @@ class Slider extends QUI\Control
     {
         $images = array();
 
-        foreach ($this->_data as $data) {
+        foreach ($this->data as $data) {
             $images[] = $data['image'];
         }
 
