@@ -321,14 +321,13 @@ define('package/quiqqer/slider/bin/Slider', [
 
                     window.addEvents({
                         resize: QUIFunctionsUtils.debounce(function () {
-                            var maxHeight = this.$getMaxHeightOfImages(
-                                Container.getElements('img')
-                            );
-
-                            this.getElm().setStyles({
-                                height: maxHeight
-                            });
-
+                            //var maxHeight = this.$getMaxHeightOfImages(
+                            //    Container.getElements('img')
+                            //);
+                            //
+                            //this.getElm().setStyles({
+                            //    height: maxHeight
+                            //});
                             this.$Slider.refresh();
 
                         }.bind(this))
