@@ -274,6 +274,10 @@ define('package/quiqqer/slider/bin/Slider', [
                         Container.getElements('img')
                     );
 
+                    if (!maxHeight) {
+                        maxHeight = '100%';
+                    }
+
                     this.getElm().setStyles({
                         height: maxHeight
                     });

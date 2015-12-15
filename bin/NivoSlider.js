@@ -26,61 +26,61 @@ define('package/quiqqer/slider/bin/NivoSlider', [
 
     'css!package/quiqqer/slider/bin/NivoSlider.css'
 
-], function(QUIFunctionsUtils)
-{
+], function (QUIFunctionsUtils) {
     "use strict";
 
     return new Class({
 
         Implements: [Events, Options],
 
-        caption: null,
-        children: null,
+        caption      : null,
+        children     : null,
         containerSize: 0,
-        count: 0,
-        currentSlide: 0,
-        currentImage: '',
-        effects: {
+        count        : 0,
+        currentSlide : 0,
+        currentImage : '',
+        effects      : {
             // used for random effects
-            common: ['fade'],
+            common    : ['fade'],
             horizontal: [
                 'foldDown', 'foldUp',
                 'sliceLeftUp', 'sliceLeftDown', 'sliceLeftRightDown',
                 'sliceLeftRightUp', 'sliceRightDown', 'sliceRightUp',
                 'wipeDown', 'wipeUp'
             ],
-            vertical: [
+            vertical  : [
                 'foldLeft', 'foldRight',
                 'sliceDownLeft', 'sliceDownRight', 'sliceUpDownLeft', 'sliceUpDownRight',
                 'sliceUpLeft', 'sliceUpRight', 'wipeLeft', 'wipeRight'
             ]
         },
-        holder: null,
-        hover: false,
-        interval: null,
-        isActive: true,
-        orientation: '',
-        paused: false,
-        running: false,
-        slices: null,
-        sliceSize: false,
-        totalSlides: 0,
+        holder       : null,
+        hover        : false,
+        interval     : null,
+        isActive     : true,
+        orientation  : '',
+        paused       : false,
+        running      : false,
+        slices       : null,
+        sliceSize    : false,
+        totalSlides  : 0,
 
         options: {
-            animSpeed: 500,
-            autoPlay: true,
-            controlNav: true,
-            controlNavItem: 'disc',
-            directionNav: true,
-            directionNavHide: false,
+            animSpeed           : 500,
+            autoPlay            : true,
+            controlNav          : true,
+            controlNavItem      : 'disc',
+            directionNav        : true,
+            directionNavHide    : false,
             directionNavPosition: 'inside',
-            directionNavWidth: '20%',
-            effect: 'sliceDown', // TODO allow to pass an array with multiple effects
-            interval: 3000,
-            orientation: 'vertical',
-            pauseOnBlur: false,
-            pauseOnHover: true,
-            slices: 15,
+            directionNavWidth   : '20%',
+            effect              : 'sliceDown', // TODO allow to pass an array with multiple effects
+            interval            : 3000,
+            orientation         : 'vertical',
+            pauseOnBlur         : false,
+            pauseOnHover        : true,
+            slices              : 15,
+            autoResize          : false,
 
             // not implemented yet
             preLoadImages: false
@@ -104,7 +104,7 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             this.setBackgroundImage();
 
             window.addEvents({
-                resize : QUIFunctionsUtils.debounce(this.refresh.bind(this))
+                resize: QUIFunctionsUtils.debounce(this.refresh.bind(this))
             });
 
             if (this.options.autoPlay) {
@@ -112,7 +112,7 @@ define('package/quiqqer/slider/bin/NivoSlider', [
 
                 if (this.options.pauseOnBlur) {
                     window.addEvents({
-                        blur: function () {
+                        blur : function () {
                             this.isActive = false;
                             this.pause();
                         }.bind(this),
@@ -125,15 +125,14 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             }
         },
 
-        refresh : function()
-        {
+        refresh: function () {
             var wasrunning = this.interval ? true : false;
 
             if (wasrunning) {
                 this.pause();
             }
 
-            if (this.slices) {
+            if (this.options.autoResize && this.slices) {
                 this.slices.destroy();
                 this.containerSize = this.holder.getSize();
 
@@ -146,9 +145,8 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             }
         },
 
-        animate: function (slice, fxStyles, last)
-        {
-            var fx = slice.retrieve('fxInstance'),
+        animate: function (slice, fxStyles, last) {
+            var fx     = slice.retrieve('fxInstance'),
                 isLast = last !== undefined && last === true;
 
             fx.start(fxStyles).chain(function () {
@@ -186,8 +184,8 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             this.slices.each(function (el, i) {
 
                 position = {
-                    left : orientation === 'vertical' ? sliceSizeX * i : 0,
-                    top  : orientation === 'horizontal' ? sliceSizeY * i : 0
+                    left: orientation === 'vertical' ? sliceSizeX * i : 0,
+                    top : orientation === 'horizontal' ? sliceSizeY * i : 0
                 };
 
                 // set size & position
@@ -196,27 +194,27 @@ define('package/quiqqer/slider/bin/NivoSlider', [
                     width  = '100%';
 
                     el.setStyles({
-                        height : height,
-                        top    : position.top,
-                        width  : width
+                        height: height,
+                        top   : position.top,
+                        width : width
                     });
                 } else { // if vertical
                     height = 0;
                     width  = i === optionSlices - 1 ? containerSizeX - (sliceSizeX * i) : sliceSizeX;
 
                     el.setStyles({
-                        height : height,
-                        left   : position.left,
-                        top    : '',
-                        width  : width
+                        height: height,
+                        left  : position.left,
+                        top   : '',
+                        width : width
                     });
                 }
 
                 el.store('fxInstance', new Fx.Morph(el, {
                     duration: this.options.animSpeed
                 })).store('coordinates', Object.merge(position, {
-                    height : height,
-                    width  : width
+                    height: height,
+                    width : width
                 }));
 
             }, this);
@@ -230,15 +228,15 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             }).inject(this.holder);
 
             this.caption.store('fxInstance', new Fx.Morph(this.caption, {
-                duration : 200,
-                wait     : false
+                duration: 200,
+                wait    : false
             }));
         },
 
         createControlNav: function () {
             var cssClass = '',
                 html,
-                i = 1;
+                i        = 1;
 
             this.container.addClass('got-control-nav');
 
@@ -246,8 +244,8 @@ define('package/quiqqer/slider/bin/NivoSlider', [
 
             if (this.options.directionNavPosition === 'inside') {
                 Nav.setStyles({
-                    height     : 46,
-                    lineHeight : 40
+                    height    : 46,
+                    lineHeight: 40
                 });
             }
 
@@ -257,21 +255,21 @@ define('package/quiqqer/slider/bin/NivoSlider', [
                     i++;
                 } else if (this.options.controlNavItem === 'disc') {
                     cssClass = 'decimal';
-                    html = '&bull;';
+                    html     = '&bull;';
                 } else {
                     html = this.options.controlNavItem;
                 }
 
                 new Element('a', {
                     'class': cssClass,
-                    events: {
+                    events : {
                         'click': function (e) {
                             e.stop();
                             this.slide(el);
                         }.bind(this)
                     },
-                    href: '#',
-                    html: html
+                    href   : '#',
+                    html   : html
                 }).inject(this.container.getElement('div.control-nav'));
             }, this);
 
@@ -286,45 +284,42 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             target = this.options.directionNavPosition === 'inside' ? this.holder : this.container;
 
             // create container
-            leftContainer = new Element('div.direction-nav-left').inject(target);
+            leftContainer  = new Element('div.direction-nav-left').inject(target);
             rightContainer = new Element('div.direction-nav-right').inject(target);
 
             // create controls
             this.leftNav = new Element('a', {
-                html : '<span class="fa fa-chevron-left"></span>',
+                html  : '<span class="fa fa-chevron-left"></span>',
                 events: {
                     'click': function (e) {
                         e.stop();
-                        if (this.options.autoPlay)
-                        {
+                        if (this.options.autoPlay) {
                             this.pause();
-                            if (!this.options.pauseOnHover)
-                            {
+                            if (!this.options.pauseOnHover) {
                                 this.play();
                             }
                         }
                         this.previous();
                     }.bind(this)
                 },
-                href: '#'
+                href  : '#'
             }).inject(leftContainer);
 
             this.rightNav = new Element('a', {
-                html : '<span class="fa fa-chevron-right"></span>',
+                html  : '<span class="fa fa-chevron-right"></span>',
                 events: {
                     'click': function (e) {
                         e.stop();
                         if (this.options.autoPlay) {
                             this.pause();
-                            if (!this.options.pauseOnHover)
-                            {
+                            if (!this.options.pauseOnHover) {
                                 this.play();
                             }
                         }
                         this.next();
                     }.bind(this)
                 },
-                href: '#'
+                href  : '#'
             }).inject(rightContainer);
 
             if (this.options.directionNavHide && this.options.directionNav) {
@@ -333,15 +328,13 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             }
         },
 
-        createLinkHolder: function ()
-        {
+        createLinkHolder: function () {
             this.linkHolder = new Element('a.nivoo-link', {
                 href: '#'
             }).inject(this.holder);
         },
 
-        createSlices: function ()
-        {
+        createSlices: function () {
             var slices = this.options.slices;
 
             this.sliceSize = {
@@ -413,16 +406,16 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             this.children = this.getImages();
 
             this.holderImage = new Element('img', {
-                src     : this.children[0].get('src'),
-                'class' : 'nivoo-slider-holder-image',
-                styles  : {
-                    maxWidth  : '100%',
-                    maxHeight : '100%'
+                src    : this.children[0].get('src'),
+                'class': 'nivoo-slider-holder-image',
+                styles : {
+                    maxWidth : '100%',
+                    maxHeight: '100%'
                 }
             }).inject(this.holder);
 
             this.containerSize = this.holderImage.getSize();
-            this.totalSlides = this.children.length;
+            this.totalSlides   = this.children.length;
             this.children.setStyle('display', 'none');
 
             this.currentImage = this.children[0];
@@ -448,14 +441,13 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             }
 
             // create directional navigation
-            if (this.options.directionNav)
-            {
+            if (this.options.directionNav) {
                 this.createDirectionNav();
 
             } else {
                 this.holder.setStyles({
                     margin: 0,
-                    width: '100%'
+                    width : '100%'
                 });
             }
 
@@ -467,16 +459,14 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             this.holderImage.setStyle('display', null);
         },
 
-        hideCaption: function ()
-        {
+        hideCaption: function () {
             this.caption.retrieve('fxInstance').start({
-                bottom: this.caption.getHeight() * -1,
+                bottom : this.caption.getHeight() * -1,
                 opacity: 0.5
             });
         },
 
-        next: function ()
-        {
+        next: function () {
             this.currentSlide += 1;
 
             if (this.currentSlide === this.totalSlides) {
@@ -486,21 +476,18 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             this.slide();
         },
 
-        pause: function ()
-        {
+        pause: function () {
             window.clearInterval(this.interval);
             this.interval = null;
         },
 
-        play: function ()
-        {
+        play: function () {
             if (this.interval === null && this.isActive === true) {
                 this.interval = this.next.periodical(this.options.interval, this);
             }
         },
 
-        previous: function ()
-        {
+        previous: function () {
             if (this.options.autoPlay) {
                 this.pause();
                 if (!this.options.pauseOnHover) {
@@ -517,8 +504,7 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             this.slide();
         },
 
-        setCurrentControlItem: function ()
-        {
+        setCurrentControlItem: function () {
             var active = this.container.getElement('div.control-nav a.current');
 
             if (active) {
@@ -528,8 +514,7 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             this.container.getElements('div.control-nav a')[this.currentSlide].addClass('current');
         },
 
-        showCaption: function ()
-        {
+        showCaption: function () {
             var title = this.currentImage.get('title');
 
             if (!title) {
@@ -540,7 +525,7 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             this.setCaptionText(title);
 
             this.caption.retrieve('fxInstance').start({
-                bottom: 0,
+                bottom : 0,
                 opacity: 1
             });
         },
@@ -580,45 +565,45 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             // Process caption
             this.showCaption();
 
-            var holderSize = this.holder.getSize();
-            var holderImageSize = this.holderImage.getSize();
+            var holderSize          = this.holder.getSize();
+            var holderImageSize     = this.holderImage.getSize();
             var holderImagePosition = this.holderImage.getPosition(this.holder);
 
-            var holderTop = holderImagePosition.y;
+            var holderTop  = holderImagePosition.y;
             var holderLeft = holderImagePosition.x;
 
-            var holderRight = holderSize.x - (holderImagePosition.x + holderImageSize.x);
+            var holderRight  = holderSize.x - (holderImagePosition.x + holderImageSize.x);
             var holderBottom = holderSize.y - (holderImagePosition.y + holderImageSize.y);
 
-            slices = this.slices;
+            slices   = this.slices;
             timeBuff = 0;
 
             // reset slices
             this.slices.each(function (slice) {
 
-                coordinates =  slice.retrieve('coordinates');
+                coordinates = slice.retrieve('coordinates');
 
                 slice.set('html', '');
 
                 new Element('img', {
-                    src : this.currentImage.get('src'),
-                    styles : {
-                        position : 'absolute',
-                        left     : coordinates.left * -1,
-                        top      : coordinates.top * -1,
-                        width    : holderImageSize.x,
-                        height   : holderImageSize.y
+                    src   : this.currentImage.get('src'),
+                    styles: {
+                        position: 'absolute',
+                        left    : coordinates.left * -1,
+                        top     : coordinates.top * -1,
+                        width   : holderImageSize.x,
+                        height  : holderImageSize.y
                     }
                 }).inject(slice);
 
                 slice.setStyles({
-                    bottom: '',
-                    height: coordinates.height,
-                    left: coordinates.left + holderImagePosition.x,
-                    opacity: 0,
-                    right: '',
-                    top: coordinates.top + holderImagePosition.y,
-                    width: coordinates.width,
+                    bottom  : '',
+                    height  : coordinates.height,
+                    left    : coordinates.left + holderImagePosition.x,
+                    opacity : 0,
+                    right   : '',
+                    top     : coordinates.top + holderImagePosition.y,
+                    width   : coordinates.width,
                     overflow: 'hidden'
                 });
 
@@ -694,7 +679,7 @@ define('package/quiqqer/slider/bin/NivoSlider', [
                     } else {
 
                         slice.setStyles({
-                            bottom : holderBottom
+                            bottom: holderBottom
                         });
                     }
 
@@ -709,28 +694,26 @@ define('package/quiqqer/slider/bin/NivoSlider', [
 
             } else if (['wipeLeft', 'wipeRight'].contains(effect)) {
 
-                    styles = {
-                        height  : holderSize.y,
-                        opacity : 1,
-                        width   : 0
-                    };
+                styles = {
+                    height : holderSize.y,
+                    opacity: 1,
+                    width  : 0
+                };
 
-                    if (effect === 'wipeRight')
-                    {
-                        Object.append(styles, {
-                            right : holderRight
-                        });
-                    }
+                if (effect === 'wipeRight') {
+                    Object.append(styles, {
+                        right: holderRight
+                    });
+                }
 
-                    slice = slices[0];
-                    slice.setStyles(styles);
+                slice = slices[0];
+                slice.setStyles(styles);
 
-                    this.animate(slice, {
-                        width: holderSize.x
-                    }, true);
+                this.animate(slice, {
+                    width: holderSize.x
+                }, true);
 
-            } else if (['sliceLeftUp', 'sliceLeftDown', 'sliceRightDown', 'sliceRightUp'].contains(effect))
-            {
+            } else if (['sliceLeftUp', 'sliceLeftDown', 'sliceRightDown', 'sliceRightUp'].contains(effect)) {
                 if (effect === 'sliceLeftUp' || effect === 'sliceRightUp') {
                     slices = slices.reverse();
                 }
@@ -738,13 +721,13 @@ define('package/quiqqer/slider/bin/NivoSlider', [
                 if (effect === 'sliceRightDown' || effect === 'sliceRightUp') {
 
                     slices.setStyles({
-                        right : holderRight
+                        right: holderRight
                     });
 
                 } else {
 
                     slices.setStyles({
-                        left  : holderLeft
+                        left: holderLeft
                     });
                 }
 
@@ -769,13 +752,13 @@ define('package/quiqqer/slider/bin/NivoSlider', [
                     if (i % 2 === 0) {
 
                         slice.setStyles({
-                            left  : holderLeft
+                            left: holderLeft
                         });
 
                     } else {
 
                         slice.setStyles({
-                            right : holderRight
+                            right: holderRight
                         });
                     }
 
@@ -791,15 +774,14 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             } else if (['wipeDown', 'wipeUp'].contains(effect)) {
 
                 styles = {
-                    height  : 0,
-                    opacity : 1,
-                    width   : holderSize.x
+                    height : 0,
+                    opacity: 1,
+                    width  : holderSize.x
                 };
 
-                if (effect === 'wipeUp')
-                {
+                if (effect === 'wipeUp') {
                     Object.append(styles, {
-                        bottom : holderBottom
+                        bottom: holderBottom
                     });
                 }
 
@@ -826,17 +808,17 @@ define('package/quiqqer/slider/bin/NivoSlider', [
                         fxStyles.height = slice.getHeight();
 
                         slice.setStyles({
-                            height : 0,
-                            width  : holderSize.x
+                            height: 0,
+                            width : holderSize.x
                         });
 
                     } else {
 
-                        fxStyles.width= slice.getWidth();
+                        fxStyles.width = slice.getWidth();
 
                         slice.setStyles({
-                            height : holderSize.y,
-                            width  : 0
+                            height: holderSize.y,
+                            width : 0
                         });
                     }
 
@@ -849,8 +831,8 @@ define('package/quiqqer/slider/bin/NivoSlider', [
                 slice = slices[0];
 
                 slice.setStyles({
-                    height : holderSize.y,
-                    width  : holderSize.x
+                    height: holderSize.y,
+                    width : holderSize.x
                 });
 
                 this.animate(slice, {opacity: 1}, true);
@@ -864,7 +846,7 @@ define('package/quiqqer/slider/bin/NivoSlider', [
                 imageSize  = this.holderImage.getSize();
 
             var left = (holderSize.x - imageSize.x) / 2;
-            var top = (holderSize.y - imageSize.y) / 2;
+            var top  = (holderSize.y - imageSize.y) / 2;
 
             if (left < 0) {
                 left = 0;
@@ -875,18 +857,16 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             }
 
             this.holderImage.setStyles({
-                left : left,
-                top  : top
+                left: left,
+                top : top
             });
         },
 
-        setCaptionText: function (text)
-        {
+        setCaptionText: function (text) {
             this.caption.set('text', text);
         },
 
-        setLink: function ()
-        {
+        setLink: function () {
             //Set active link
             var clone,
                 imageParent = this.currentImage.getParent();
