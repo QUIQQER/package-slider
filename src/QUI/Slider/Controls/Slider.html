@@ -1,12 +1,12 @@
 {foreach $this->getList() as $data}
+{assign var=target value=""}
+{if isset($data.target) && $data.target}
+    {assign var=target value=$data.target}
+{/if}
 <div class="entry quiqqer-slider-image"
      data-src="{$data.image->getUrl()}"
      data-href="{$data.link}"
-     {if isset($data.target)}
-     data-target="{$data.target}"
-     {else}
-     data-target="_blank"
-     {/if}
+     data-target="{$target}"
 >
     <div class="title"></div>
     <div class="text">{$data.text}</div>
