@@ -2,7 +2,11 @@
 <div class="entry quiqqer-slider-image"
      data-src="{$data.image->getUrl()}"
      data-href="{$data.link}"
+     {if isset($data.target)}
+     data-target="{$data.target}"
+     {else}
      data-target="_blank"
+     {/if}
 >
     <div class="title"></div>
     <div class="text">{$data.text}</div>

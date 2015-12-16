@@ -114,8 +114,9 @@ class Slider extends QUI\Control
      * @param string $imagePath
      * @param string|bool $link
      * @param string|bool $text
+     * @param string|bool $target
      */
-    public function addImage($imagePath, $link = false, $text = false)
+    public function addImage($imagePath, $link = false, $text = false, $target = false)
     {
         try {
             $Image = Utils::getImageByUrl($imagePath);
@@ -145,7 +146,8 @@ class Slider extends QUI\Control
         $this->data[] = array(
             'link' => $link,
             'text' => $text,
-            'image' => $Image
+            'image' => $Image,
+            'target' => $target
         );
     }
 
