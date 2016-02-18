@@ -186,7 +186,7 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
                 var Edit = Entry.getElement('.quiqqer-slider-imageDataList-entry-edit');
 
                 new QUIButton({
-                    icon : 'icon-edit',
+                    icon : 'fa fa-edit',
                     title : QUILocale.get(lg, 'imageDataList.btn.edit.title'),
                     events : {
                         onClick : function() {
@@ -196,7 +196,7 @@ define('package/quiqqer/slider/bin/admin/ImageDataList', [
                 }).inject(Edit);
 
                 new QUIButton({
-                    icon : 'icon-trash',
+                    icon : 'fa fa-trash',
                     title : QUILocale.get(lg, 'imageDataList.btn.del.title'),
                     events : {
                         onClick : function() {
