@@ -17,7 +17,6 @@
             <de><![CDATA[Bild-Eintrag entfernen]]></de>
             <en><![CDATA[Remove the image entry]]></en>
         </locale>
-
         <locale name="imageDataList.window.remove.title">
             <de><![CDATA[Möchten Sie wirklich das Bild entfernen?]]></de>
             <en><![CDATA[Are you sure you want to remove the image?]]></en>
@@ -27,20 +26,13 @@
             <en><![CDATA[Really remove the image?]]></en>
         </locale>
         <locale name="imageDataList.window.remove.information" html="true">
-            <de><![CDATA[
-                Das Bild wird nur aus dem Slider entfernt und wird nicht mehr im Slider angezeigt.<br />
-                Auch die gesetzten Daten gehen verloren.
-            ]]></de>
-            <en><![CDATA[
-                The picture is only removed from the slider and is no longer displayed in the slider. <br />
-                The set data will be lost.
-            ]]></en>
+            <de><![CDATA[Das Bild wird nur aus dem Slider entfernt und wird nicht mehr im Slider angezeigt.<br />
+                Auch die gesetzten Daten gehen verloren.]]></de>
+            <en><![CDATA[The picture is only removed from the slider and is no longer displayed in the slider. <br />
+                The set data will be lost.]]></en>
         </locale>
     </groups>
-    <groups name="quiqqer/slider" datatype="php">
-
-    </groups>
-    <groups name="quiqqer/slider" datatype="php,js ">
+    <groups name="quiqqer/slider" datatype="php,js ">
         <locale name="brick.control.slider.setting.images">
             <de><![CDATA[Bilder hinzufügen]]></de>
             <en><![CDATA[Add images]]></en>
@@ -65,7 +57,6 @@
             <de><![CDATA[Zeitintervall]]></de>
             <en><![CDATA[Time period]]></en>
         </locale>
-
         <locale name="brick.control.slider.setting.controlsPosition">
             <de><![CDATA[Position der Bedienelemente]]></de>
             <en><![CDATA[Position of the controls]]></en>
@@ -78,7 +69,6 @@
             <de><![CDATA[Innen]]></de>
             <en><![CDATA[inside]]></en>
         </locale>
-
         <locale name="brick.control.slider.setting.effect">
             <de><![CDATA[Effekt]]></de>
             <en><![CDATA[Effect]]></en>
@@ -159,7 +149,6 @@
             <de><![CDATA[wipeRight]]></de>
             <en><![CDATA[wipeRight]]></en>
         </locale>
-
         <locale name="brick.control.slider.setting.slices">
             <de><![CDATA[Anzahl der Teile]]></de>
             <en><![CDATA[Number of slices]]></en>
@@ -167,6 +156,16 @@
         <locale name="brick.control.slider.setting.animspeed">
             <de><![CDATA[Animationsgeschwindigkeit]]></de>
             <en><![CDATA[Animation speed]]></en>
+        </locale>
+    </groups>
+    <groups name="quiqqer/slider" datatype="php">
+        <locale name="slider.control.title">
+            <de><![CDATA[Slider: Seiten-Slider]]></de>
+            <en><![CDATA[]]></en>
+        </locale>
+        <locale name="slider.nivo.control.title">
+            <de><![CDATA[Slider: Bilder-Slider ]]></de>
+            <en><![CDATA[]]></en>
         </locale>
     </groups>
 </locales>
