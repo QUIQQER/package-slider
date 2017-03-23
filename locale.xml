@@ -32,7 +32,25 @@
                 The set data will be lost.]]></en>
         </locale>
     </groups>
-    <groups name="quiqqer/slider" datatype="php,js ">
+    <groups name="quiqqer/slider" datatype="php,js">
+        <locale name="slider.control.title">
+            <de><![CDATA[Slider: Standard Slider]]></de>
+            <en><![CDATA[Slider: Standard slider]]></en>
+        </locale>
+        <locale name="slider.control.description">
+            <de><![CDATA[]]></de>
+            <en><![CDATA[]]></en>
+        </locale>
+
+        <locale name="slider.nivo.control.title">
+            <de><![CDATA[Slider: Nivo Slider]]></de>
+            <en><![CDATA[Slider: Nivo slider]]></en>
+        </locale>
+        <locale name="slider.nivo.control.description">
+            <de><![CDATA[]]></de>
+            <en><![CDATA[]]></en>
+        </locale>
+
         <locale name="brick.control.slider.setting.images">
             <de><![CDATA[Bilder hinzufügen]]></de>
             <en><![CDATA[Add images]]></en>
@@ -156,16 +174,6 @@
         <locale name="brick.control.slider.setting.animspeed">
             <de><![CDATA[Animationsgeschwindigkeit]]></de>
             <en><![CDATA[Animation speed]]></en>
-        </locale>
-    </groups>
-    <groups name="quiqqer/slider" datatype="php">
-        <locale name="slider.control.title">
-            <de><![CDATA[Slider: Seiten-Slider]]></de>
-            <en><![CDATA[]]></en>
-        </locale>
-        <locale name="slider.nivo.control.title">
-            <de><![CDATA[Slider: Bilder-Slider ]]></de>
-            <en><![CDATA[]]></en>
         </locale>
     </groups>
 </locales>
