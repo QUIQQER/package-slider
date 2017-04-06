@@ -33,6 +33,15 @@
         </locale>
     </groups>
     <groups name="quiqqer/slider" datatype="php,js">
+        <locale name="package.title">
+            <de><![CDATA[QUIQQER - Slider]]></de>
+            <en><![CDATA[QUIQQER - Slider]]></en>
+        </locale>
+        <locale name="package.description" html="true">
+            <de><![CDATA[Das Paket stellt mehrere Slider für QUIQQER zur Verfügung.]]></de>
+            <en><![CDATA[The package provides several sliders for QUIQQER.]]></en>
+        </locale>
+
         <locale name="slider.control.title">
             <de><![CDATA[Slider: Standard Slider]]></de>
             <en><![CDATA[Slider: Standard slider]]></en>
