@@ -1,7 +1,7 @@
 {
     "name" : "quiqqer/slider",
     "type" : "quiqqer-plugin",
-    "description" : "",
+    "description" : "The package provides several sliders for QUIQQER.",
 
     "version" : "dev-dev",
 
