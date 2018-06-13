@@ -23,10 +23,10 @@
 define('package/quiqqer/slider/bin/NivoSlider', [
 
     'qui/utils/Functions',
-
+    'Locale',
     'css!package/quiqqer/slider/bin/NivoSlider.css'
 
-], function (QUIFunctionsUtils) {
+], function (QUIFunctionsUtils, QUILocale) {
     "use strict";
 
     return new Class({
@@ -404,6 +404,21 @@ define('package/quiqqer/slider/bin/NivoSlider', [
             }
 
             this.children = this.getImages();
+
+            if (this.children.length < 1) {
+                var icon = '<span class="fa fa-2x fa-file-image-o"></span>',
+                    text = '<p>'+QUILocale.get('quiqqer/gallery', "quiqqer.gallery.slider.noImages")+'</p>',
+                    html = icon + text;
+
+                new Element('div', {
+                    html: html,
+                    styles: {
+                        'text-align': 'center'
+                    }
+                }).inject(this.container);
+
+                return;
+            }
 
             this.holderImage = new Element('img', {
                 src    : this.children[0].get('src'),
@@ -840,6 +855,10 @@ define('package/quiqqer/slider/bin/NivoSlider', [
         },
 
         setBackgroundImage: function () {
+            if (!this.currentImage) {
+                return false;
+            }
+
             this.holderImage.set('src', this.currentImage.get('src'));
 
             var holderSize = this.holder.getSize(),
