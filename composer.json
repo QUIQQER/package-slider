@@ -2,8 +2,8 @@
     "name" : "quiqqer/slider",
     "type" : "quiqqer-plugin",
     "description" : "The package provides several sliders for QUIQQER.",
-
     "version" : "dev-dev",
+    "license" : "GPL-3.0+",
 
     "authors" : [{
         "name": "Henning Leutz",
