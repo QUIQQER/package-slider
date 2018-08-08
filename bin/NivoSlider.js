@@ -905,6 +905,9 @@ define('package/quiqqer/slider/bin/NivoSlider', [
          */
 
         finish: function () {
+            this.slices.each(function(slice) {
+                slice.hide();
+            });
             this.fireEvent('finish');
         },
 
@@ -913,6 +916,9 @@ define('package/quiqqer/slider/bin/NivoSlider', [
         },
 
         start: function () {
+            this.slices.each(function(slice) {
+                slice.show();
+            });
             this.fireEvent('start');
         }
 
