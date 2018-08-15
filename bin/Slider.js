@@ -39,9 +39,9 @@ define('package/quiqqer/slider/bin/Slider', [
             type              : 'standard', // standard / nivo
             period            : 5000,
             shadow            : false,
-            showcontrolsalways: true,
-            showtitlealways   : true,
-            autostart         : true
+            showcontrolsalways: false,
+            showtitlealways   : false,
+            autostart         : false
         },
 
         initialize: function (options) {
@@ -88,7 +88,11 @@ define('package/quiqqer/slider/bin/Slider', [
             }
 
             if (this.$Elm.get('data-showcontrolsalways')) {
-                this.setAttribute('showControlsAlways', this.$Elm.get('data-showcontrolsalways'));
+                this.setAttribute('showcontrolsalways', this.$Elm.get('data-showcontrolsalways'));
+            }
+
+            if (this.$Elm.get('data-showtitlealways')) {
+                this.setAttribute('showtitlealways', this.$Elm.get('data-showtitlealways'));
             }
 
             if (this.$Elm.get('data-period')) {
@@ -172,10 +176,10 @@ define('package/quiqqer/slider/bin/Slider', [
                 var images = this.getImageData();
 
                 this.$Slider = new Slider({
-                    period            : this.getAttribute('period'),
-                    shadow            : this.getAttribute('shadow'),
-                    showControlsAlways: this.getAttribute('showcontrolsalways'),
-                    showTitleAlways   : this.getAttribute('showtitlealways'),
+                    period                : this.getAttribute('period'),
+                    shadow                : this.getAttribute('shadow'),
+                    'show-controls-always': this.getAttribute('showcontrolsalways'),
+                    'show-title-always'   : this.getAttribute('showtitlealways'),
 
                     styles: {
                         height: this.getElm().getSize().y

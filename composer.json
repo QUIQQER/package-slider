@@ -1,10 +1,9 @@
 {
     "name" : "quiqqer/slider",
-    "type" : "quiqqer-plugin",
-    "description" : "",
-
+    "type" : "quiqqer-module",
+    "description" : "The package provides several sliders for QUIQQER.",
     "version" : "dev-master",
-
+    "license" : "GPL-3.0+",
     "authors" : [{
         "name": "Henning Leutz",
         "email": "leutz@pcsg.de",
@@ -22,8 +21,8 @@
     },
 
     "autoload": {
-        "psr-0" : {
-            "QUI" : "src/"
+        "psr-4" : {
+            "QUI\\Slider\\" : "src/QUI/Slider"
         }
     }
 }

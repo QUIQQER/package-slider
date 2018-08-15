@@ -1,10 +1,11 @@
+![QUIQQER Slider](bin/images/Readme.jpg)
 
 QUIQQER Slider
 ========
 
-Das Paket stellt mehrere Slider für QUIQQER zur Verfügung.
+The package provides multiple slider for QUIQQER.
 
-Packetname:
+Package name:
 
     quiqqer/slider
 
@@ -12,9 +13,9 @@ Packetname:
 Features
 --------
 
-- Einzelne Bilder können in die Slider gesetzt werden
-- Für jedes Bild kann ein Link gesetzt werden
-- Verschiedenen Slider Arten und Effekte
+- Single pictures can be put in the slider
+- A hyperlink can be set for each picture
+- Different slider types and effects:
  
      
     - Standard Slider
@@ -39,52 +40,51 @@ Features
         - wipeLeft
         - wipeRight
 
+
 Installation
 ------------
 
-Der Paketname ist: quiqqer/slider
+The package name is: quiqqer/slider
 
 
-Mitwirken
+Contribute
 ----------
 
 - Issue Tracker: https://dev.quiqqer.com/quiqqer/package-slider/issues
 - Source Code: https://dev.quiqqer.com/quiqqer/package-slider
+- Wiki: https://dev.quiqqer.com/quiqqer/package-slider/wikis/home
 
 
 Support
 -------
 
-Falls Sie ein Fehler gefunden haben oder Verbesserungen wünschen,
-Dann können Sie gerne an support@pcsg.de eine E-Mail schreiben.
+If you found any flaws, have any wishes or suggestions you can send an email
+to [support@pcsg.de](mailto:support@pcsg.de) to inform us about your concerns. 
+We will try to respond to your request and forward it to the responsible developer.
 
 
 License
 -------
+`GPL-3.0+`
 
-
-Entwickler
+Usage
 --------
 
-Das Paket bringt ein Slider Control und Brick mit.
+The package provides a slider-control and -brick.
 
-JavaScript
-
+JavaScript:
 ```javascript
-
 require(['package/quiqqer/slider/bin/Slider'], function(Slider) {
 
     new Slider({
-        type      : 'nivo'
+        type      : 'nivo',
         autostart : true
     }).inject(Container);
 
 });
-
 ```
 
-PHP
-
+PHP:
 ```php
 <?php
 

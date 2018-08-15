@@ -1,0 +1,35 @@
+<quiqqer>
+    <package>
+        <title>
+            <locale group="quiqqer/slider" var="package.title"/>
+        </title>
+
+        <description>
+            <locale group="quiqqer/slider" var="package.description"/>
+        </description>
+
+        <image src="URL_OPT_DIR/quiqqer/slider/bin/images/Logo.jpg"/>
+
+        <preview>
+            <image src="URL_OPT_DIR/quiqqer/slider/bin/images/preview/1.jpg"/>
+            <image src="URL_OPT_DIR/quiqqer/slider/bin/images/preview/2.jpg"/>
+        </preview>
+
+        <support>
+            <email><![CDATA[support@pcsg.de]]></email>
+            <forum><![CDATA[https://community.quiqqer.com]]></forum>
+            <source><![CDATA[https://dev.quiqqer.com/quiqqer/package-slider]]></source>
+            <issues><![CDATA[https://dev.quiqqer.com/quiqqer/package-slider/issues]]></issues>
+            <wiki><![CDATA[https://dev.quiqqer.com/quiqqer/package-slider/wikis/home]]></wiki>
+        </support>
+
+        <copyright>
+            <name><![CDATA[PCSG - Computer & Internet Service OHG]]></name>
+            <license><![CDATA[GPL-3.0+]]></license>
+        </copyright>
+
+        <provider>
+            <rest src="\QUI\APP\RestProvider"/>
+        </provider>
+    </package>
+</quiqqer>
