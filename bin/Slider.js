@@ -40,7 +40,7 @@ define('package/quiqqer/slider/bin/Slider', [
             period            : 5000,
             shadow            : false,
             showcontrolsalways: false,
-            showtitlealways   : true,
+            showtitlealways   : false,
             autostart         : false
         },
 
@@ -89,6 +89,10 @@ define('package/quiqqer/slider/bin/Slider', [
 
             if (this.$Elm.get('data-showcontrolsalways')) {
                 this.setAttribute('showcontrolsalways', this.$Elm.get('data-showcontrolsalways'));
+            }
+
+            if (this.$Elm.get('data-showtitlealways')) {
+                this.setAttribute('showtitlealways', this.$Elm.get('data-showtitlealways'));
             }
 
             if (this.$Elm.get('data-period')) {
@@ -175,7 +179,7 @@ define('package/quiqqer/slider/bin/Slider', [
                     period                : this.getAttribute('period'),
                     shadow                : this.getAttribute('shadow'),
                     'show-controls-always': this.getAttribute('showcontrolsalways'),
-                    showTitleAlways       : this.getAttribute('showtitlealways'),
+                    'show-title-always'   : this.getAttribute('showtitlealways'),
 
                     styles: {
                         height: this.getElm().getSize().y
