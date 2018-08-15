@@ -41,7 +41,7 @@ define('package/quiqqer/slider/bin/Slider', [
             shadow            : false,
             showcontrolsalways: true,
             showtitlealways   : true,
-            autostart         : true
+            autostart         : false
         },
 
         initialize: function (options) {
@@ -95,8 +95,8 @@ define('package/quiqqer/slider/bin/Slider', [
                 this.setAttribute('period', this.$Elm.get('data-period'));
             }
 
-            if (!this.$Elm.get('data-autostart')) {
-                this.setAttribute('autostart', false);
+            if (this.$Elm.get('data-autostart')) {
+                this.setAttribute('autostart', this.$Elm.get('data-autostart'));
             }
 
             if (this.$Elm.get('data-type')) {
