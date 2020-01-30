@@ -1,28 +1,26 @@
 {
-    "name" : "quiqqer/slider",
-    "type" : "quiqqer-module",
-    "description" : "The package provides several sliders for QUIQQER.",
-    "version" : "dev-master",
-    "license" : "GPL-3.0+",
-    "authors" : [{
-        "name": "Henning Leutz",
-        "email": "leutz@pcsg.de",
-        "homepage": "http://www.pcsg.de",
-        "role": "Developer"
-    }],
-
-    "support" : {
-        "email" : "support@pcsg.de"
+    "name": "quiqqer\/slider",
+    "type": "quiqqer-module",
+    "description": "The package provides several sliders for QUIQQER.",
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "Henning Leutz",
+            "email": "leutz@pcsg.de",
+            "homepage": "http:\/\/www.pcsg.de",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "support@pcsg.de"
     },
-
     "require": {
-        "quiqqer/quiqqer" : "*@dev",
-        "quiqqer/gallery" : "*@dev"
+        "quiqqer\/quiqqer": "*@dev",
+        "quiqqer\/gallery": "*@dev"
     },
-
     "autoload": {
-        "psr-4" : {
-            "QUI\\Slider\\" : "src/QUI/Slider"
+        "psr-4": {
+            "QUI\\Slider\\": "src\/QUI\/Slider"
         }
     }
 }
